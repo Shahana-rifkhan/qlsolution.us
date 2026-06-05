@@ -1,0 +1,2122 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>Quantum Leap Solution</title>
+    
+    <!-- Website Icon -->
+    <link rel="icon" type="image/png" href="assets/icon.png">
+    <link rel="shortcut icon" href="assets/icon.png">
+    <link rel="apple-touch-icon" href="assets/icon.png">
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800;900&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#000;
+  --bg2:#080808;
+  --card:#0d0d0d;
+  --white:#fff;
+  --muted:rgba(255,255,255,.62);
+  --line:rgba(255,255,255,.12);
+  --soft:rgba(255,255,255,.06);
+}
+html{scroll-behavior:smooth}
+body{
+  font-family:Inter,sans-serif;
+  background:var(--bg);
+  color:var(--white);
+  overflow-x:hidden;
+}
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  background:
+    radial-gradient(circle at 20% 20%,rgba(255,255,255,.08),transparent 25%),
+    radial-gradient(circle at 80% 30%,rgba(255,255,255,.06),transparent 30%),
+    linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px);
+  background-size:auto,auto,70px 70px,70px 70px;
+  pointer-events:none;
+  z-index:-3;
+}
+canvas#particles{
+  position:fixed;
+  inset:0;
+  z-index:-2;
+}
+a{text-decoration:none;color:inherit}
+section{padding:110px 6%}
+.nav{
+  position:fixed;
+  top:0;
+  width:100%;
+  z-index:999;
+  padding:18px 6%;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  background:rgba(0,0,0,.65);
+  backdrop-filter:blur(18px);
+  border-bottom:1px solid var(--line);
+}
+.brand{
+  display:flex;
+  align-items:center;
+  gap:14px;
+  font-weight:900;
+  letter-spacing:.08em;
+}
+.brand img{
+  width:54px;
+  height:54px;
+  object-fit:contain;
+  filter:drop-shadow(0 0 18px rgba(255,255,255,.35));
+}
+.links{
+  display:flex;
+  align-items:center;
+  gap:30px;
+}
+.links a{
+  color:var(--muted);
+  font-size:13px;
+  font-weight:800;
+  text-transform:uppercase;
+}
+.links a:hover{color:#fff}
+.btn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  padding:15px 28px;
+  border-radius:999px;
+  background:#fff;
+  color:#000!important;
+  font-weight:900;
+  border:1px solid #fff;
+  transition:.3s;
+}
+.btn:hover{
+  transform:translateY(-4px) scale(1.03);
+  box-shadow:0 0 40px rgba(255,255,255,.28);
+}
+.btn.ghost{
+  background:transparent;
+  color:#fff!important;
+}
+.btn.ghost:hover{background:#fff;color:#000!important}
+.menu{display:none;background:none;border:0;color:#fff;font-size:30px}
+
+/* HERO */
+.hero{
+  min-height:100vh;
+  display:grid;
+  grid-template-columns:1.05fr .95fr;
+  align-items:center;
+  gap:50px;
+  padding:150px 6% 80px;
+  position:relative;
+}
+.eyebrow{
+  display:inline-flex;
+  border:1px solid var(--line);
+  padding:10px 18px;
+  border-radius:999px;
+  color:var(--muted);
+  margin-bottom:28px;
+  background:rgba(255,255,255,.04);
+}
+h1{
+  font-family:Syne,Inter,sans-serif;
+  font-size:clamp(48px,7vw,112px);
+  line-height:.92;
+  letter-spacing:-.07em;
+  margin-bottom:28px;
+}
+h1 span{
+  color:#000;
+  -webkit-text-stroke:1.5px #fff;
+  text-shadow:0 0 30px rgba(255,255,255,.15);
+}
+.hero p{
+  max-width:680px;
+  color:var(--muted);
+  font-size:19px;
+  line-height:1.8;
+}
+.actions{
+  display:flex;
+  gap:16px;
+  flex-wrap:wrap;
+  margin-top:38px;
+}
+.stats{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:12px;
+  margin-top:48px;
+}
+.stat{
+  border:1px solid var(--line);
+  padding:22px;
+  border-radius:24px;
+  background:rgba(255,255,255,.035);
+}
+.stat strong{
+  display:block;
+  font-size:28px;
+  font-weight:900;
+}
+.stat small{
+  color:var(--muted);
+  font-size:12px;
+  text-transform:uppercase;
+}
+
+/* 3D QLS MODEL */
+.model-scene{
+  min-height:600px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  perspective:1200px;
+}
+.qls-3d{
+  position:relative;
+  width:min(440px,80vw);
+  height:min(440px,80vw);
+  transform-style:preserve-3d;
+  animation:floatModel 6s ease-in-out infinite;
+}
+.logo-orb{
+  position:absolute;
+  inset:0;
+  border-radius:50%;
+  background:
+    radial-gradient(circle at 35% 25%,rgba(255,255,255,.95),rgba(255,255,255,.18) 25%,rgba(255,255,255,.03) 55%,transparent 72%);
+  border:1px solid rgba(255,255,255,.22);
+  box-shadow:
+    inset 0 0 55px rgba(255,255,255,.18),
+    0 0 80px rgba(255,255,255,.18);
+  transform:rotateX(65deg) rotateZ(35deg);
+}
+.logo-core{
+  position:absolute;
+  inset:20%;
+  border-radius:50%;
+  background:#fff;
+  mask:url("assets/logo.png") center/contain no-repeat;
+  -webkit-mask:url("assets/logo.png") center/contain no-repeat;
+  filter:drop-shadow(0 0 35px white);
+  animation:spinCore 10s linear infinite;
+}
+.ring{
+  position:absolute;
+  inset:8%;
+  border:2px solid rgba(255,255,255,.35);
+  border-radius:50%;
+  transform-style:preserve-3d;
+  animation:spinRing 9s linear infinite;
+}
+.ring.r2{
+  inset:16%;
+  animation-duration:13s;
+  transform:rotateX(80deg);
+}
+.ring.r3{
+  inset:2%;
+  animation-duration:17s;
+  transform:rotateY(70deg);
+}
+.dots span{
+  position:absolute;
+  width:5px;
+  height:5px;
+  background:#fff;
+  border-radius:50%;
+  box-shadow:0 0 12px #fff;
+  animation:spark 3s ease-in-out infinite;
+}
+.dots span:nth-child(1){top:18%;left:10%}
+.dots span:nth-child(2){top:70%;left:85%;animation-delay:.4s}
+.dots span:nth-child(3){top:10%;left:75%;animation-delay:.8s}
+.dots span:nth-child(4){top:82%;left:22%;animation-delay:1.2s}
+@keyframes floatModel{
+  0%,100%{transform:translateY(0) rotateX(0) rotateY(0)}
+  50%{transform:translateY(-25px) rotateX(8deg) rotateY(-12deg)}
+}
+@keyframes spinCore{to{transform:rotateY(360deg)}}
+@keyframes spinRing{to{transform:rotateZ(360deg) rotateX(360deg)}}
+@keyframes spark{50%{transform:scale(2);opacity:.4}}
+
+/* COMMON */
+.section-head{
+  max-width:850px;
+  margin-bottom:55px;
+}
+.label{
+  color:var(--muted);
+  text-transform:uppercase;
+  letter-spacing:.18em;
+  font-size:13px;
+  font-weight:900;
+  margin-bottom:16px;
+}
+h2{
+  font-family:Syne,Inter,sans-serif;
+  font-size:clamp(34px,5vw,72px);
+  line-height:1;
+  letter-spacing:-.05em;
+}
+.section-head p{
+  margin-top:20px;
+  color:var(--muted);
+  font-size:18px;
+  line-height:1.8;
+}
+.grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:22px;
+}
+.card{
+  position:relative;
+  min-height:280px;
+  padding:32px;
+  border:1px solid var(--line);
+  border-radius:30px;
+  background:linear-gradient(145deg,rgba(255,255,255,.08),rgba(255,255,255,.015));
+  transform-style:preserve-3d;
+  transition:.35s;
+  overflow:hidden;
+}
+.card::before{
+  content:"";
+  position:absolute;
+  inset:-1px;
+  background:radial-gradient(circle at var(--x,50%) var(--y,50%),rgba(255,255,255,.18),transparent 35%);
+  opacity:0;
+  transition:.3s;
+}
+.card:hover::before{opacity:1}
+.card:hover{
+  transform:translateY(-12px) rotateX(8deg) rotateY(-8deg);
+  border-color:rgba(255,255,255,.32);
+}
+.icon{
+  width:72px;
+  height:72px;
+  border-radius:22px;
+  border:1px solid var(--line);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:30px;
+  margin-bottom:26px;
+  background:#fff;
+  color:#000;
+  box-shadow:0 18px 40px rgba(255,255,255,.12);
+}
+.card h3{
+  font-size:22px;
+  margin-bottom:12px;
+}
+.card p{
+  color:var(--muted);
+  line-height:1.75;
+}
+
+/* MARQUEE */
+.marquee{
+  overflow:hidden;
+  border-block:1px solid var(--line);
+  background:#050505;
+  padding:24px 0;
+}
+.track{
+  display:flex;
+  gap:38px;
+  width:max-content;
+  animation:marquee 28s linear infinite;
+}
+.track span{
+  font-size:14px;
+  font-weight:900;
+  text-transform:uppercase;
+  letter-spacing:.2em;
+  color:rgba(255,255,255,.45);
+}
+@keyframes marquee{to{transform:translateX(-50%)}}
+
+/* SPLIT */
+.split{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:40px;
+  align-items:center;
+}
+.glass{
+  border:1px solid var(--line);
+  border-radius:34px;
+  padding:42px;
+  background:rgba(255,255,255,.04);
+}
+.glass p{
+  color:var(--muted);
+  line-height:1.8;
+  margin-top:18px;
+}
+.process{
+  counter-reset:step;
+}
+.step{
+  border-left:1px solid var(--line);
+  padding:0 0 42px 32px;
+  position:relative;
+}
+.step::before{
+  counter-increment:step;
+  content:"0" counter(step);
+  position:absolute;
+  left:-28px;
+  top:0;
+  width:56px;
+  height:56px;
+  border-radius:50%;
+  background:#fff;
+  color:#000;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:900;
+}
+.step h3{font-size:26px;margin-bottom:10px}
+.step p{color:var(--muted);line-height:1.7}
+
+/* CTA */
+.cta{
+  text-align:center;
+  border-top:1px solid var(--line);
+  border-bottom:1px solid var(--line);
+  background:
+    radial-gradient(circle at center,rgba(255,255,255,.11),transparent 45%),
+    #030303;
+}
+.cta p{
+  color:var(--muted);
+  max-width:720px;
+  margin:22px auto 36px;
+  font-size:18px;
+  line-height:1.8;
+}
+
+/* FLOAT BUTTONS */
+.whatsapp,.mail{
+  position:fixed;
+  right:22px;
+  z-index:999;
+  padding:14px 20px;
+  border-radius:999px;
+  font-weight:900;
+  box-shadow:0 0 30px rgba(255,255,255,.18);
+}
+.whatsapp{
+  bottom:22px;
+  background:#fff;
+  color:#000;
+}
+.mail{
+  bottom:78px;
+  border:1px solid var(--line);
+  background:#000;
+  color:#fff;
+}
+
+/* FOOTER */
+footer{
+  padding:60px 6%;
+  display:flex;
+  justify-content:space-between;
+  gap:25px;
+  flex-wrap:wrap;
+  color:var(--muted);
+  border-top:1px solid var(--line);
+}
+footer strong{color:#fff}
+
+/* REVEAL */
+.reveal{
+  opacity:0;
+  transform:translateY(40px);
+  transition:1s ease;
+}
+.reveal.show{
+  opacity:1;
+  transform:translateY(0);
+}
+
+/* MOBILE */
+@media(max-width:980px){
+  .hero,.split{grid-template-columns:1fr}
+  .model-scene{min-height:420px}
+  .grid{grid-template-columns:1fr 1fr}
+  .stats{grid-template-columns:1fr 1fr}
+}
+@media(max-width:720px){
+  section{padding:80px 5%}
+  .hero{padding:130px 5% 60px}
+  .links{
+    display:none;
+    position:absolute;
+    top:91px;
+    left:0;
+    width:100%;
+    background:#000;
+    border-bottom:1px solid var(--line);
+    padding:25px;
+    flex-direction:column;
+    align-items:flex-start;
+  }
+  .links.active{display:flex}
+  .menu{display:block}
+  .grid,.stats{grid-template-columns:1fr}
+  .brand span{display:none}
+  h1{font-size:52px}
+  .mail{display:none}
+}
+
+
+/* PREMIUM CURSOR */
+.cursor-dot,.cursor-ring{position:fixed;top:0;left:0;pointer-events:none;z-index:99999;transform:translate(-50%,-50%)}
+.cursor-dot{width:9px;height:9px;background:#fff;border-radius:50%;box-shadow:0 0 18px #fff}
+.cursor-ring{width:42px;height:42px;border:1px solid rgba(255,255,255,.55);border-radius:50%;transition:width .2s,height .2s;mix-blend-mode:difference}
+
+/* EXTRA 3D MOTION */
+.card,.glass,.stat,.footer-grid>div{transform-style:preserve-3d;will-change:transform}
+.card:hover,.glass:hover,.stat:hover{transform:perspective(900px) translateY(-12px) rotateX(9deg) rotateY(-9deg) scale(1.02);box-shadow:0 30px 90px rgba(255,255,255,.08),inset 0 0 30px rgba(255,255,255,.05)}
+.icon{animation:iconFloat 4s ease-in-out infinite}
+@keyframes iconFloat{0%,100%{transform:translateZ(20px) translateY(0)}50%{transform:translateZ(40px) translateY(-8px)}}
+
+/* WHATSAPP CHAT BOT */
+.whatsapp-chat{position:fixed;right:22px;bottom:22px;z-index:9999}
+.whatsapp-float{width:66px;height:66px;border-radius:50%;border:1px solid rgba(255,255,255,.25);background:#fff;color:#000;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 0 35px rgba(255,255,255,.35);animation:whatsappPulse 2s infinite}
+.whatsapp-float svg{width:36px;height:36px}
+@keyframes whatsappPulse{0%{box-shadow:0 0 0 0 rgba(255,255,255,.35)}70%{box-shadow:0 0 0 18px rgba(255,255,255,0)}100%{box-shadow:0 0 0 0 rgba(255,255,255,0)}}
+.whatsapp-bot{position:absolute;right:0;bottom:82px;width:330px;background:#050505;border:1px solid rgba(255,255,255,.16);border-radius:24px;overflow:hidden;box-shadow:0 25px 90px rgba(0,0,0,.75);transform:scale(.8) translateY(30px);opacity:0;pointer-events:none;transition:.3s ease}
+.whatsapp-bot.active{transform:scale(1) translateY(0);opacity:1;pointer-events:auto}
+.bot-head{padding:18px 20px;display:flex;justify-content:space-between;align-items:center;background:#fff;color:#000}
+.bot-head button{border:0;background:#000;color:#fff;width:28px;height:28px;border-radius:50%;cursor:pointer}
+.bot-body{padding:18px}
+.bot-msg{background:rgba(255,255,255,.08);padding:12px 14px;border-radius:16px;margin-bottom:14px;color:#fff}
+.bot-body button{width:100%;padding:12px;margin:7px 0;border-radius:14px;border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.06);color:#fff;cursor:pointer;text-align:left;transition:.25s}
+.bot-body button:hover{background:#fff;color:#000;transform:translateX(4px)}
+.bot-body textarea{width:100%;height:80px;margin-top:10px;border-radius:14px;border:1px solid rgba(255,255,255,.14);background:#000;color:#fff;padding:12px;resize:none;outline:none}
+
+/* PROFESSIONAL FOOTER */
+.pro-footer{position:relative;padding:90px 6% 30px;background:radial-gradient(circle at 20% 10%,rgba(255,255,255,.08),transparent 30%),linear-gradient(180deg,#030303,#000);border-top:1px solid rgba(255,255,255,.12);overflow:hidden;display:block;color:var(--muted)}
+.footer-glow{position:absolute;width:380px;height:380px;border-radius:50%;background:rgba(255,255,255,.06);filter:blur(80px);right:-120px;top:-120px}
+.footer-grid{position:relative;display:grid;grid-template-columns:2fr 1fr 1fr 1.2fr;gap:40px;z-index:2}
+.footer-brand img{width:78px;margin-bottom:18px;filter:drop-shadow(0 0 22px rgba(255,255,255,.35))}
+.footer-brand h3{font-size:26px;margin-bottom:12px;color:#fff}
+.footer-brand p,.pro-footer p{color:rgba(255,255,255,.6);line-height:1.8}
+.pro-footer h4{font-size:15px;text-transform:uppercase;letter-spacing:.15em;margin-bottom:18px;color:#fff}
+.pro-footer a{display:block;color:rgba(255,255,255,.62);margin-bottom:12px;transition:.25s}
+.pro-footer a:hover{color:#fff;transform:translateX(5px)}
+.footer-socials{display:flex;gap:10px;margin-top:22px}
+.footer-socials a{width:36px;height:36px;border:1px solid rgba(255,255,255,.18);border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:900;margin:0}
+.footer-btn{margin-top:14px;padding:12px 18px;border-radius:999px;background:#fff;color:#000!important;text-align:center;font-weight:800}
+.footer-btn.dark{background:transparent;border:1px solid rgba(255,255,255,.2);color:#fff!important}
+.footer-bottom{position:relative;z-index:2;margin-top:55px;padding-top:24px;border-top:1px solid rgba(255,255,255,.12);display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;color:rgba(255,255,255,.45);font-size:14px}
+@media(max-width:900px){.footer-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:600px){.footer-grid{grid-template-columns:1fr}.whatsapp-bot{width:300px;right:-5px}.cursor-dot,.cursor-ring{display:none}}
+
+
+
+</style>
+
+
+<style>
+  /* ===== MOBILE RESPONSIVE FIX ONLY ===== */
+@media (max-width: 768px){
+
+html, body{
+  width:100%;
+  max-width:100%;
+  overflow-x:hidden !important;
+}
+
+section{
+  padding:55px 20px !important;
+}
+
+.hero{
+  width:100%;
+  min-height:auto !important;
+  display:flex !important;
+  flex-direction:column !important;
+  padding:115px 20px 45px !important;
+  gap:30px !important;
+  overflow:hidden !important;
+}
+
+.hero > div{
+  width:100%;
+  max-width:100%;
+}
+
+h1{
+  font-size:42px !important;
+  line-height:1 !important;
+  letter-spacing:-.04em !important;
+  margin-bottom:20px !important;
+  word-break:normal;
+}
+
+.hero p,
+.section-head p,
+.glass p,
+.card p,
+.step p{
+  font-size:15px !important;
+  line-height:1.65 !important;
+}
+
+h2{
+  font-size:34px !important;
+  line-height:1.05 !important;
+}
+
+.section-head{
+  margin-bottom:30px !important;
+}
+
+.eyebrow{
+  margin-bottom:18px !important;
+  font-size:12px;
+}
+
+.actions{
+  margin-top:24px !important;
+  gap:12px !important;
+}
+
+.btn{
+  width:100%;
+  padding:14px 18px !important;
+  font-size:14px !important;
+}
+
+.stats{
+  grid-template-columns:1fr 1fr !important;
+  margin-top:28px !important;
+  gap:10px !important;
+}
+
+.stat{
+  padding:16px !important;
+  border-radius:18px !important;
+}
+
+.stat strong{
+  font-size:22px !important;
+}
+
+.grid{
+  grid-template-columns:1fr !important;
+  gap:16px !important;
+}
+
+.card{
+  min-height:auto !important;
+  padding:24px !important;
+  border-radius:22px !important;
+}
+
+.icon{
+  width:58px !important;
+  height:58px !important;
+  font-size:24px !important;
+  margin-bottom:18px !important;
+}
+
+.split{
+  grid-template-columns:1fr !important;
+  gap:24px !important;
+}
+
+.glass{
+  padding:26px !important;
+  border-radius:24px !important;
+}
+
+.step{
+  padding:0 0 28px 28px !important;
+}
+
+.step::before{
+  width:44px !important;
+  height:44px !important;
+  left:-22px !important;
+  font-size:13px !important;
+}
+
+.step h3{
+  font-size:21px !important;
+}
+
+.marquee{
+  padding:16px 0 !important;
+}
+
+.track{
+  gap:24px !important;
+}
+
+.track span{
+  font-size:11px !important;
+}
+
+.model-scene{
+  width:100% !important;
+  height:auto !important;
+  min-height:430px !important;
+  overflow:visible !important;
+  transform:none !important;
+}
+
+.hero-robot-container{
+  min-height:430px !important;
+  padding:0 !important;
+  overflow:visible !important;
+}
+
+.qls-outline-robot{
+  width:390px !important;
+  height:500px !important;
+  max-width:100vw !important;
+  transform:scale(.72) !important;
+  transform-origin:center center !important;
+}
+
+.qls-float-card{
+  display:none !important;
+}
+
+.orbit-b,
+.orbit-c{
+  display:none !important;
+}
+
+.orbit-a{
+  width:340px !important;
+  height:340px !important;
+}
+
+.qls-robot-head{
+  top:25px !important;
+}
+
+.qls-robot-body{
+  top:200px !important;
+}
+
+.qls-platform{
+  bottom:20px !important;
+}
+
+.cta{
+  padding:55px 20px !important;
+}
+
+.pro-footer{
+  padding:55px 20px 25px !important;
+}
+
+.footer-grid{
+  grid-template-columns:1fr !important;
+  gap:28px !important;
+}
+
+.footer-bottom{
+  margin-top:30px !important;
+  font-size:12px !important;
+}
+
+.whatsapp-chat{
+  right:15px !important;
+  bottom:15px !important;
+}
+
+.whatsapp-float{
+  width:56px !important;
+  height:56px !important;
+}
+
+.whatsapp-bot{
+  width:285px !important;
+  right:0 !important;
+}
+}
+
+/* ===== SMALL MOBILE FIX ===== */
+@media (max-width: 430px){
+
+.hero{
+  padding-top:105px !important;
+}
+
+h1{
+  font-size:36px !important;
+}
+
+h2{
+  font-size:30px !important;
+}
+
+.stats{
+  grid-template-columns:1fr !important;
+}
+
+.qls-outline-robot{
+  transform:scale(.62) !important;
+}
+
+.model-scene,
+.hero-robot-container{
+  min-height:360px !important;
+}
+
+.nav{
+  padding:14px 18px !important;
+}
+
+.brand img{
+  width:46px !important;
+  height:46px !important;
+}
+
+.links{
+  top:75px !important;
+}
+}
+</style>
+
+</head>
+
+
+<div class="project-modal" id="projectModal">
+    <div class="project-form-box">
+      <button class="project-close" onclick="closeProjectForm()">×</button>
+  
+      <h2>Start Your Project</h2>
+      <p>Fill the details below and choose Email or WhatsApp to send your inquiry.</p>
+  
+      <form id="projectForm">
+        <input type="text" id="clientName" placeholder="Your Name" required>
+        <input type="email" id="clientEmail" placeholder="Your Email" required>
+        <input type="tel" id="clientPhone" placeholder="Contact Number" required>
+  
+        <select id="projectType" required>
+          <option value="">Select Project Type</option>
+          <option>Website Development</option>
+          <option>Mobile App Development</option>
+          <option>Web Application</option>
+          <option>Digital Marketing</option>
+          <option>AI / Automation</option>
+          <option>Branding</option>
+          <option>Other</option>
+        </select>
+  
+        <input type="text" id="budget" placeholder="Estimated Budget">
+        <input type="text" id="timeline" placeholder="Expected Timeline">
+  
+        <textarea id="message" placeholder="Tell us about your project"></textarea>
+  
+        <div class="project-actions">
+          <button type="button" onclick="sendProjectEmail()">Send via Email</button>
+          <button type="button" class="whatsapp-send" onclick="sendProjectWhatsApp()">Send via WhatsApp</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+
+  <style>
+    .project-modal{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.78);
+  backdrop-filter:blur(14px);
+  z-index:99999;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+  opacity:0;
+  pointer-events:none;
+  transition:.35s ease;
+}
+
+.project-modal.active{
+  opacity:1;
+  pointer-events:auto;
+}
+
+.project-form-box{
+  position:relative;
+  width:100%;
+  max-width:560px;
+  background:linear-gradient(145deg,rgba(255,255,255,.12),rgba(255,255,255,.03));
+  border:1px solid rgba(255,255,255,.18);
+  border-radius:30px;
+  padding:34px;
+  box-shadow:0 30px 100px rgba(0,0,0,.85), inset 0 0 35px rgba(255,255,255,.04);
+  transform:translateY(45px) scale(.88) rotateX(12deg);
+  opacity:0;
+  transition:.45s ease;
+  animation:formGlow 4s ease-in-out infinite;
+}
+
+.project-modal.active .project-form-box{
+  transform:translateY(0) scale(1) rotateX(0);
+  opacity:1;
+}
+
+.project-form-box h2{
+  font-size:34px;
+  margin-bottom:10px;
+}
+
+.project-form-box p{
+  color:rgba(255,255,255,.62);
+  line-height:1.6;
+  margin-bottom:22px;
+}
+
+.project-close{
+  position:absolute;
+  top:18px;
+  right:18px;
+  width:36px;
+  height:36px;
+  border-radius:50%;
+  border:1px solid rgba(255,255,255,.18);
+  background:#fff;
+  color:#000;
+  font-size:24px;
+  cursor:pointer;
+}
+
+.project-form-box input,
+.project-form-box select,
+.project-form-box textarea{
+  width:100%;
+  margin-bottom:13px;
+  padding:15px 16px;
+  border-radius:16px;
+  border:1px solid rgba(255,255,255,.14);
+  background:rgba(0,0,0,.55);
+  color:#fff;
+  outline:none;
+  font-family:Inter,sans-serif;
+}
+
+.project-form-box textarea{
+  min-height:105px;
+  resize:none;
+}
+
+.project-form-box input::placeholder,
+.project-form-box textarea::placeholder{
+  color:rgba(255,255,255,.45);
+}
+
+.project-form-box select option{
+  background:#000;
+  color:#fff;
+}
+
+.project-actions{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+  margin-top:8px;
+}
+
+.project-actions button{
+  padding:15px 18px;
+  border-radius:999px;
+  border:1px solid #fff;
+  background:#fff;
+  color:#000;
+  font-weight:900;
+  cursor:pointer;
+  transition:.3s ease;
+}
+
+.project-actions button:hover{
+  transform:translateY(-4px);
+  box-shadow:0 0 35px rgba(255,255,255,.25);
+}
+
+.project-actions .whatsapp-send{
+  background:transparent;
+  color:#fff;
+}
+
+.project-actions .whatsapp-send:hover{
+  background:#fff;
+  color:#000;
+}
+
+@keyframes formGlow{
+  0%,100%{box-shadow:0 30px 100px rgba(0,0,0,.85),0 0 20px rgba(255,255,255,.08)}
+  50%{box-shadow:0 30px 100px rgba(0,0,0,.85),0 0 45px rgba(255,255,255,.18)}
+}
+
+@media(max-width:600px){
+  .project-form-box{
+    padding:26px 20px;
+    border-radius:24px;
+    max-height:90vh;
+    overflow-y:auto;
+  }
+
+  .project-form-box h2{
+    font-size:28px;
+  }
+
+  .project-actions{
+    grid-template-columns:1fr;
+  }
+}
+  </style>
+
+  <script>
+    function openProjectForm(){
+  document.getElementById("projectModal").classList.add("active");
+}
+
+function closeProjectForm(){
+  document.getElementById("projectModal").classList.remove("active");
+}
+
+function getProjectFormMessage(){
+  const name = document.getElementById("clientName").value.trim();
+  const email = document.getElementById("clientEmail").value.trim();
+  const phone = document.getElementById("clientPhone").value.trim();
+  const type = document.getElementById("projectType").value.trim();
+  const budget = document.getElementById("budget").value.trim();
+  const timeline = document.getElementById("timeline").value.trim();
+  const message = document.getElementById("message").value.trim();
+
+  if(!name || !email || !phone || !type){
+    alert("Please fill Name, Email, Contact Number, and Project Type.");
+    return null;
+  }
+
+  return `Hello Quantum Leap Solution,
+
+I would like to start a new project.
+
+Client Details:
+Name: ${name}
+Email: ${email}
+Contact Number: ${phone}
+
+Project Details:
+Project Type: ${type}
+Estimated Budget: ${budget || "Not mentioned"}
+Expected Timeline: ${timeline || "Not mentioned"}
+
+Project Message:
+${message || "Not mentioned"}
+
+Thank you.`;
+}
+
+function sendProjectEmail(){
+  const body = getProjectFormMessage();
+  if(!body) return;
+
+  const subject = "New Project Inquiry";
+  const email = "qlsolution.us@gmail.com";
+
+  window.location.href = `mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+}
+
+function sendProjectWhatsApp(){
+  const body = getProjectFormMessage();
+  if(!body) return;
+
+  const number = "94757544000";
+  window.open(`https://wa.me/${number}?text=${encodeURIComponent(body)}`, "_blank");
+}
+
+document.addEventListener("keydown", function(e){
+  if(e.key === "Escape"){
+    closeProjectForm();
+  }
+});
+
+document.getElementById("projectModal").addEventListener("click", function(e){
+  if(e.target === this){
+    closeProjectForm();
+  }
+});
+  </script>
+
+
+<body>
+
+<canvas id="particles"></canvas>
+<div class="cursor-dot"></div>
+<div class="cursor-ring"></div>
+
+<nav class="nav">
+  <a href="#home" class="brand">
+    <img src="assets/icon.png" alt="Quantum Leap Solution Logo">
+    <span>QUANTUM LEAP SOLUTION</span>
+  </a>
+
+  <button class="menu" onclick="document.querySelector('.links').classList.toggle('active')">☰</button>
+
+  <div class="links">
+    <a href="#home">Home</a>
+    <a href="about.html">About</a>
+    <a href="services.html">Services</a>
+    <a href="Projects">Our Projects</a>
+    <a href="contact.html">Contact Us</a>
+    <a class="btn" href="javascript:void(0)" onclick="openProjectForm()">Start Project</a>
+  </div>
+</nav>
+
+<main class="hero" id="home">
+  <div>
+    <div class="eyebrow reveal">Innovate · Elevate · Accelerate</div>
+
+    <h1 class="reveal">
+      We don’t post content.<br>
+      <span>We build digital momentum.</span>
+    </h1>
+
+    <p class="reveal">
+      Quantum Leap Solution creates websites, web applications, mobile apps,
+      AI-powered tools, digital marketing systems, cloud solutions, cybersecurity,
+      branding, and academic support services with a premium 3D animated digital experience.
+    </p>
+
+    <div class="actions reveal">
+      <a class="btn" href="https://wa.me/94757544000?text=Hello%20Quantum%20Leap%20Solution%2C%20I%20want%20to%20start%20a%20project" target="_blank">WhatsApp QLS</a>
+      <a class="btn ghost" href="#services">Explore Services</a>
+    </div>
+
+    <div class="stats reveal">
+      <div class="stat"><strong>268+</strong><small>Team Members</small></div>
+      <div class="stat"><strong>1,748</strong><small>Clients Served</small></div>
+      <div class="stat"><strong>1,000+</strong><small>Projects Completed</small></div>
+      <div class="stat"><strong>500+</strong><small>Running Projects</small></div>
+    </div>
+  </div>
+<script>
+    /* 3D MODEL ICON MOUSE MOTION */
+const qlsModel = document.getElementById("qlsModel");
+
+if(qlsModel){
+  qlsModel.addEventListener("mousemove", e => {
+    const rect = qlsModel.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+
+    const rotateY = ((x / rect.width) - 0.5) * 24;
+    const rotateX = ((y / rect.height) - 0.5) * -24;
+
+    qlsModel.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+  });
+
+  qlsModel.addEventListener("mouseleave", () => {
+    qlsModel.style.transform = "";
+  });
+}
+</script>
+</div>
+
+<style>
+  .qls-outline-robot{
+    position:relative;
+    width:min(620px,92vw);
+    height:650px;
+    margin:auto;
+    perspective:1300px;
+    transform-style:preserve-3d;
+    animation:outlineFloat 7s ease-in-out infinite;
+  }
+  
+  .qls-outline-robot::before{
+    content:"";
+    position:absolute;
+    inset:5%;
+    border-radius:50%;
+    background:radial-gradient(circle,rgba(255,255,255,.13),transparent 62%);
+    filter:blur(30px);
+    animation:robotGlow 4s ease-in-out infinite;
+  }
+  
+  .qls-robot-head{
+    position:absolute;
+    left:50%;
+    top:35px;
+    width:170px;
+    height:190px;
+    transform:translateX(-50%);
+    border:2px solid rgba(255,255,255,.9);
+    border-radius:48% 48% 44% 44%;
+    background:linear-gradient(145deg,rgba(255,255,255,.08),rgba(255,255,255,.01));
+    box-shadow:0 0 25px rgba(255,255,255,.35), inset 0 0 28px rgba(255,255,255,.08);
+    z-index:7;
+  }
+  
+  .head-line{
+    position:absolute;
+    top:10px;
+    height:170px;
+    width:1px;
+    background:rgba(255,255,255,.28);
+  }
+  
+  .head-line.side-left{left:32px;transform:rotate(14deg)}
+  .head-line.side-right{right:32px;transform:rotate(-14deg)}
+  
+  .robot-ear{
+    position:absolute;
+    left:-22px;
+    top:72px;
+    width:35px;
+    height:52px;
+    border:2px solid rgba(255,255,255,.9);
+    border-radius:50%;
+    box-shadow:0 0 18px rgba(255,255,255,.35);
+  }
+  
+  .robot-ear::after{
+    content:"";
+    position:absolute;
+    inset:8px;
+    border:2px solid rgba(255,255,255,.55);
+    border-radius:50%;
+  }
+  
+  .robot-face{
+    position:absolute;
+    left:50%;
+    top:72px;
+    width:122px;
+    height:56px;
+    transform:translateX(-50%);
+    border:2px solid rgba(255,255,255,.9);
+    border-radius:28px;
+    background:#060606;
+    box-shadow:0 0 30px rgba(255,255,255,.35);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:28px;
+  }
+  
+  .robot-face span{
+    width:17px;
+    height:17px;
+    border-radius:50%;
+    background:#fff;
+    box-shadow:0 0 22px #fff;
+    animation:eyePulse 2.4s ease-in-out infinite;
+  }
+  
+  .robot-face span:nth-child(2){animation-delay:.3s}
+  
+  .robot-neck{
+    position:absolute;
+    left:50%;
+    bottom:-42px;
+    width:55px;
+    height:52px;
+    transform:translateX(-50%);
+    border-left:2px solid rgba(255,255,255,.65);
+    border-right:2px solid rgba(255,255,255,.65);
+    background:linear-gradient(90deg,transparent,rgba(255,255,255,.12),transparent);
+  }
+  
+  .qls-robot-body{
+    position:absolute;
+    left:50%;
+    top:250px;
+    width:360px;
+    height:350px;
+    transform:translateX(-50%);
+    border:2px solid rgba(255,255,255,.9);
+    border-radius:80px 80px 35px 35px;
+    background:linear-gradient(145deg,rgba(255,255,255,.07),rgba(255,255,255,.01));
+    box-shadow:0 0 35px rgba(255,255,255,.25), inset 0 0 35px rgba(255,255,255,.07);
+    z-index:5;
+    overflow:visible;
+  }
+  
+  .body-dots{
+    position:absolute;
+    inset:0;
+    border-radius:inherit;
+    background-image:radial-gradient(rgba(255,255,255,.35) 1px,transparent 1px);
+    background-size:11px 11px;
+    opacity:.22;
+    animation:dotsMove 10s linear infinite;
+  }
+  
+  .coding-panel,
+  .website-panel{
+    position:absolute;
+    left:50%;
+    transform:translateX(-50%);
+    width:285px;
+    border:2px solid rgba(255,255,255,.9);
+    border-radius:18px;
+    background:rgba(0,0,0,.62);
+    box-shadow:0 0 30px rgba(255,255,255,.24), inset 0 0 18px rgba(255,255,255,.06);
+    z-index:9;
+    overflow:hidden;
+  }
+  
+  .coding-panel{
+    top:35px;
+    height:145px;
+    padding:28px 24px 18px;
+  }
+  
+  .website-panel{
+    top:205px;
+    height:165px;
+    padding:30px 18px 16px;
+    animation:webPanelRise 4s ease-in-out infinite;
+  }
+  
+  .panel-dots{
+    position:absolute;
+    top:12px;
+    left:18px;
+    display:flex;
+    gap:8px;
+  }
+  
+  .panel-dots span{
+    width:9px;
+    height:9px;
+    border-radius:50%;
+    background:#fff;
+    box-shadow:0 0 10px #fff;
+  }
+  
+  .coding-panel b{
+    display:block;
+    color:#fff;
+    font-size:24px;
+    line-height:1;
+    margin-bottom:8px;
+  }
+  
+  .coding-panel b.end{
+    position:absolute;
+    left:24px;
+    bottom:18px;
+  }
+  
+  .line{
+    display:block;
+    height:7px;
+    border-radius:999px;
+    background:#fff;
+    margin:8px 0 0 58px;
+    opacity:.86;
+    transform-origin:left;
+    animation:codeWrite 2.8s ease-in-out infinite;
+  }
+  
+  .l1{width:70px}
+  .l2{width:155px;animation-delay:.2s}
+  .l3{width:125px;animation-delay:.4s}
+  .l4{width:172px;animation-delay:.6s}
+  .l5{width:95px;animation-delay:.8s}
+  
+  .web-img{
+    width:110px;
+    height:72px;
+    border:2px solid rgba(255,255,255,.85);
+    border-radius:4px;
+    position:absolute;
+    left:24px;
+    top:55px;
+  }
+  
+  .web-img::before{
+    content:"";
+    position:absolute;
+    left:18px;
+    bottom:15px;
+    width:72px;
+    height:38px;
+    border-left:2px solid rgba(255,255,255,.75);
+    border-bottom:2px solid rgba(255,255,255,.75);
+    transform:skewX(-18deg);
+  }
+  
+  .web-img::after{
+    content:"";
+    position:absolute;
+    right:20px;
+    top:18px;
+    width:14px;
+    height:14px;
+    background:#fff;
+    border-radius:50%;
+    box-shadow:0 0 14px #fff;
+  }
+  
+  .web-text{
+    position:absolute;
+    right:22px;
+    height:5px;
+    border-radius:999px;
+    background:#fff;
+    opacity:.65;
+  }
+  
+  .t1{top:58px;width:105px}
+  .t2{top:78px;width:128px}
+  .t3{top:98px;width:78px}
+  
+  .web-boxes{
+    position:absolute;
+    left:24px;
+    right:24px;
+    bottom:16px;
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:22px;
+  }
+  
+  .web-boxes span{
+    height:34px;
+    border:2px solid rgba(255,255,255,.8);
+    border-radius:4px;
+    animation:boxFlash 2.4s ease-in-out infinite;
+  }
+  
+  .web-boxes span:nth-child(2){animation-delay:.3s}
+  .web-boxes span:nth-child(3){animation-delay:.6s}
+  
+  .qls-robot-orbit{
+    position:absolute;
+    left:50%;
+    top:50%;
+    border:1px solid rgba(255,255,255,.26);
+    border-radius:50%;
+    transform:translate(-50%,-50%);
+    z-index:1;
+  }
+  
+  .orbit-a{
+    width:520px;
+    height:520px;
+    animation:orbitRotate 20s linear infinite;
+  }
+  
+  .orbit-b{
+    width:610px;
+    height:260px;
+    animation:orbitRotate 24s linear infinite reverse;
+  }
+  
+  .orbit-c{
+    width:420px;
+    height:640px;
+    opacity:.45;
+    animation:orbitRotate 28s linear infinite;
+  }
+  
+  .qls-float-card{
+    position:absolute;
+    border:1px solid rgba(255,255,255,.75);
+    background:rgba(0,0,0,.72);
+    color:#fff;
+    border-radius:14px;
+    box-shadow:0 0 26px rgba(255,255,255,.22);
+    backdrop-filter:blur(8px);
+    z-index:4;
+    animation:floatCard 5s ease-in-out infinite;
+  }
+  
+  .code-card{
+    min-width:78px;
+    padding:14px 18px;
+    text-align:center;
+    font-weight:900;
+    font-size:20px;
+  }
+  
+  .top-left{top:105px;left:50px}
+  .mid-left{top:315px;left:10px}
+  .low-left{bottom:115px;left:65px}
+  
+  .top-right{
+    top:115px;
+    right:20px;
+    width:145px;
+    height:96px;
+    padding:16px;
+  }
+  
+  .top-right span{
+    display:block;
+    height:6px;
+    margin-left:62px;
+    margin-bottom:12px;
+    background:#fff;
+    border-radius:999px;
+    opacity:.7;
+  }
+  
+  .top-right span:first-child{
+    width:45px;
+    height:46px;
+    border:2px solid rgba(255,255,255,.75);
+    background:transparent;
+    margin-left:0;
+    float:left;
+  }
+  
+  .mid-right{top:350px;right:25px}
+  .low-right{
+    bottom:145px;
+    right:72px;
+    width:78px;
+    height:58px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:42px;
+  }
+  
+  .qls-platform{
+    position:absolute;
+    left:50%;
+    bottom:20px;
+    width:430px;
+    height:95px;
+    transform:translateX(-50%) rotateX(72deg);
+    border:2px solid rgba(255,255,255,.85);
+    border-radius:50%;
+    background:radial-gradient(circle,rgba(255,255,255,.75),rgba(255,255,255,.14),transparent 70%);
+    box-shadow:0 0 35px rgba(255,255,255,.35);
+    z-index:2;
+    animation:platformPulseOutline 3.5s ease-in-out infinite;
+  }
+  
+  @keyframes outlineFloat{
+    0%,100%{transform:translateY(0) rotateY(0)}
+    50%{transform:translateY(-20px) rotateY(-6deg)}
+  }
+  
+  @keyframes robotGlow{
+    50%{opacity:.65;transform:scale(1.08)}
+  }
+  
+  @keyframes eyePulse{
+    50%{transform:scale(1.25);opacity:.7}
+  }
+  
+  @keyframes dotsMove{
+    to{background-position:110px 110px}
+  }
+  
+  @keyframes codeWrite{
+    0%{transform:scaleX(.25);opacity:.25}
+    45%,70%{transform:scaleX(1);opacity:.9}
+    100%{transform:scaleX(.25);opacity:.25}
+  }
+  
+  @keyframes webPanelRise{
+    50%{transform:translateX(-50%) translateY(-8px)}
+  }
+  
+  @keyframes boxFlash{
+    50%{background:rgba(255,255,255,.18);box-shadow:0 0 14px rgba(255,255,255,.5)}
+  }
+  
+  @keyframes orbitRotate{
+    to{transform:translate(-50%,-50%) rotate(360deg)}
+  }
+  
+  @keyframes floatCard{
+    50%{transform:translateY(-14px)}
+  }
+  
+  @keyframes platformPulseOutline{
+    50%{opacity:.7;transform:translateX(-50%) rotateX(72deg) scale(1.08)}
+  }
+  
+  @media(max-width:768px){
+    .qls-outline-robot{
+      width:430px;
+      height:520px;
+      transform:scale(.78);
+    }
+  
+    .qls-robot-head{
+      top:20px;
+      width:135px;
+      height:150px;
+    }
+  
+    .robot-face{
+      top:58px;
+      width:96px;
+      height:46px;
+      gap:20px;
+    }
+  
+    .robot-face span{
+      width:13px;
+      height:13px;
+    }
+  
+    .robot-ear{
+      width:28px;
+      height:42px;
+      top:60px;
+    }
+  
+    .robot-neck{
+      bottom:-35px;
+      height:42px;
+    }
+  
+    .qls-robot-body{
+      top:200px;
+      width:280px;
+      height:285px;
+      border-radius:55px 55px 28px 28px;
+    }
+  
+    .coding-panel,
+    .website-panel{
+      width:225px;
+    }
+  
+    .coding-panel{
+      top:28px;
+      height:118px;
+    }
+  
+    .website-panel{
+      top:165px;
+      height:135px;
+    }
+  
+    .qls-float-card{
+      transform:scale(.78);
+    }
+  
+    .top-left{left:10px}
+    .mid-left{left:-25px}
+    .low-left{left:20px}
+    .top-right{right:-20px}
+    .mid-right{right:-20px}
+    .low-right{right:20px}
+  
+    .orbit-a{width:370px;height:370px}
+    .orbit-b{width:440px;height:190px}
+    .orbit-c{width:300px;height:470px}
+  
+    .qls-platform{
+      width:300px;
+      bottom:8px;
+    }
+  }
+  
+  .hero-robot-container{
+      position:relative;
+      width:100%;
+      min-height:700px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      overflow:visible;
+  }
+  
+  .model-scene{
+      position:relative;
+      width:650px;
+      height:700px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      overflow:visible;
+  }
+
+  /* FINAL MOBILE ROBOT FIX */
+@media (max-width:768px){
+
+.hero{
+  overflow:hidden !important;
+}
+
+.hero-robot-container{
+  min-height:330px !important;
+  height:330px !important;
+  padding:0 !important;
+  margin:0 !important;
+  overflow:hidden !important;
+  display:flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+}
+
+.model-scene{
+  width:100% !important;
+  height:330px !important;
+  min-height:330px !important;
+  overflow:hidden !important;
+  display:flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+}
+
+.qls-outline-robot{
+  width:620px !important;
+  height:650px !important;
+  transform:scale(.52) !important;
+  transform-origin:center center !important;
+  margin-top:-95px !important;
+}
+
+.qls-float-card,
+.orbit-b,
+.orbit-c{
+  display:none !important;
+}
+
+.orbit-a{
+  width:460px !important;
+  height:460px !important;
+}
+}
+
+@media (max-width:430px){
+
+.hero-robot-container,
+.model-scene{
+  height:310px !important;
+  min-height:310px !important;
+}
+
+.qls-outline-robot{
+  transform:scale(.48) !important;
+  margin-top:-110px !important;
+}
+}
+  </style>
+  
+  
+  
+    <div class="model-scene reveal">
+      <div class="qls-outline-robot" id="qlsOutlineRobot">
+  
+        <div class="qls-robot-orbit orbit-a"></div>
+        <div class="qls-robot-orbit orbit-b"></div>
+        <div class="qls-robot-orbit orbit-c"></div>
+  
+        <div class="qls-float-card code-card top-left">&lt;/&gt;</div>
+        <div class="qls-float-card code-card mid-left">Web</div>
+        <div class="qls-float-card code-card low-left">Apps</div>
+  
+        <div class="qls-float-card site-card top-right">
+          <span></span><span></span><span></span>
+        </div>
+  
+        <div class="qls-float-card code-card mid-right">AI/ML</div>
+        <div class="qls-float-card globe-card low-right">◎</div>
+  
+        <div class="qls-robot-head">
+          <div class="head-line side-left"></div>
+          <div class="head-line side-right"></div>
+          <div class="robot-ear"></div>
+  
+          <div class="robot-face">
+            <span></span>
+            <span></span>
+          </div>
+  
+          <div class="robot-neck"></div>
+        </div>
+  
+        <div class="qls-robot-body">
+          <div class="body-dots"></div>
+  
+          <div class="coding-panel">
+            <div class="panel-dots">
+              <span></span><span></span><span></span>
+            </div>
+  
+            <b>&lt;/&gt;</b>
+            <i class="line l1"></i>
+            <i class="line l2"></i>
+            <i class="line l3"></i>
+            <i class="line l4"></i>
+            <i class="line l5"></i>
+            <b class="end">&lt;/&gt;</b>
+          </div>
+  
+          <div class="website-panel">
+            <div class="panel-dots">
+              <span></span><span></span><span></span>
+            </div>
+  
+            <div class="web-img"></div>
+            <div class="web-text t1"></div>
+            <div class="web-text t2"></div>
+            <div class="web-text t3"></div>
+  
+            <div class="web-boxes">
+              <span></span><span></span><span></span>
+            </div>
+          </div>
+        </div>
+  
+        <div class="qls-platform"></div>
+  
+      </div>
+    </div>
+  
+  <script>
+  document.addEventListener("DOMContentLoaded", function(){
+    const qlsOutlineRobot = document.getElementById("qlsOutlineRobot");
+  
+    if(!qlsOutlineRobot) return;
+  
+    qlsOutlineRobot.addEventListener("mousemove", function(e){
+      const rect = qlsOutlineRobot.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+  
+      const rotateY = ((x / rect.width) - 0.5) * 18;
+      const rotateX = ((y / rect.height) - 0.5) * -14;
+  
+      qlsOutlineRobot.style.animation = "none";
+      qlsOutlineRobot.style.transform =
+        `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+    });
+  
+    qlsOutlineRobot.addEventListener("mouseleave", function(){
+      qlsOutlineRobot.style.animation = "";
+      qlsOutlineRobot.style.transform = "";
+    });
+  });
+  </script>
+  </div>
+</main>
+
+<div class="marquee">
+  <div class="track">
+    <span>Web Development</span><span>Mobile Apps</span><span>AI & ML</span><span>Cloud Solutions</span><span>Cybersecurity</span><span>Digital Marketing</span><span>Brand Identity</span><span>Academic Support</span>
+    <span>Web Development</span><span>Mobile Apps</span><span>AI & ML</span><span>Cloud Solutions</span><span>Cybersecurity</span><span>Digital Marketing</span><span>Brand Identity</span><span>Academic Support</span>
+  </div>
+</div>
+
+<section id="about">
+  <div class="split">
+    <div class="section-head reveal">
+      <div class="label">Who We Are</div>
+      <h2>A full-spectrum digital and IT powerhouse.</h2>
+      <p>
+        At Quantum Leap Solution, we deliver tailored, high-impact digital solutions
+        for businesses across industries and geographies. The word “Solution” reflects
+        our commitment to end-to-end IT services.
+      </p>
+    </div>
+
+    <div class="glass reveal">
+      <h2 style="font-size:40px;">Innovate. Elevate. Accelerate.</h2>
+      <p>
+        We turn ideas into reality through web development, mobile applications,
+        AI automation, cloud systems, cybersecurity, digital marketing, branding,
+        data analytics, consulting, and academic services.
+      </p>
+    </div>
+  </div>
+</section>
+
+<section id="services">
+  <div class="section-head reveal">
+    <div class="label">What We Do</div>
+    <h2>Services built in motion.</h2>
+    <p>Every service card is designed with 3D hover movement, glowing depth, and responsive animation.</p>
+  </div>
+
+  <div class="grid">
+    <div class="card reveal"><div class="icon">🌐</div><h3>Web Design & Development</h3><p>Responsive websites, landing pages, WordPress sites, and scalable web applications.</p></div>
+    <div class="card reveal"><div class="icon">📱</div><h3>Mobile App Development</h3><p>Android and iOS app solutions focused on speed, usability, and business growth.</p></div>
+    <div class="card reveal"><div class="icon">🤖</div><h3>AI & Machine Learning</h3><p>Automation, prediction, smart tools, and AI-driven business workflows.</p></div>
+    <div class="card reveal"><div class="icon">☁️</div><h3>Cloud Solutions</h3><p>Secure cloud migration, hosting, backup, and scalable infrastructure services.</p></div>
+    <div class="card reveal"><div class="icon">🛡️</div><h3>Cybersecurity</h3><p>Protection strategies, monitoring, threat mitigation, and secure digital systems.</p></div>
+    <div class="card reveal"><div class="icon">📣</div><h3>Digital Marketing & SEO</h3><p>SEO, social media, ads, content, and lead-generation campaigns.</p></div>
+    <div class="card reveal"><div class="icon">🎨</div><h3>Brand Identity</h3><p>Logos, visual systems, social media creatives, and premium brand design.</p></div>
+    <div class="card reveal"><div class="icon">📊</div><h3>Data Analytics</h3><p>Dashboards, insights, Oracle DBA support, reporting, and business intelligence.</p></div>
+    <div class="card reveal"><div class="icon">🎓</div><h3>Academic Support</h3><p>Research support, thesis help, data analysis, and academic writing assistance.</p></div>
+  </div>
+</section>
+
+<section id="process">
+  <div class="split">
+    <div class="section-head reveal">
+      <div class="label">How We Work</div>
+      <h2>From idea to launch, we build with precision.</h2>
+      <p>
+        Our process keeps your project clear, creative, and scalable from the first discussion to final deployment.
+      </p>
+    </div>
+
+    <div class="process reveal">
+      <div class="step"><h3>Requirement Gathering</h3><p>We understand your goals, users, features, and expected outcomes.</p></div>
+      <div class="step"><h3>Design & Prototype</h3><p>We create modern UI layouts, wireframes, and brand-aligned experiences.</p></div>
+      <div class="step"><h3>Agile Development</h3><p>We build in structured phases using clean, scalable technologies.</p></div>
+      <div class="step"><h3>Deploy & Support</h3><p>We launch, monitor, maintain, and continuously improve your solution.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="why">
+  <div class="section-head reveal">
+    <div class="label">Why Choose QLS</div>
+    <h2>Built on trust. Driven by innovation.</h2>
+    <p>We combine creativity, technology, and strategy to help businesses take the next quantum leap.</p>
+  </div>
+
+  <div class="grid">
+    <div class="card reveal"><div class="icon">🏆</div><h3>Trusted Quality</h3><p>Secure, scalable, high-performance solutions delivered with care.</p></div>
+    <div class="card reveal"><div class="icon">🔧</div><h3>Tailored Solutions</h3><p>Every project is customized around your business and audience.</p></div>
+    <div class="card reveal"><div class="icon">🌍</div><h3>Global Presence</h3><p>Supporting clients across Sri Lanka, USA, Dubai, and worldwide.</p></div>
+    <div class="card reveal"><div class="icon">🔄</div><h3>Full-Cycle Service</h3><p>From concept to deployment, we handle the full digital journey.</p></div>
+    <div class="card reveal"><div class="icon">🧠</div><h3>Innovation Focused</h3><p>We use modern tools, AI, automation, and future-ready systems.</p></div>
+    <div class="card reveal"><div class="icon">👥</div><h3>Dedicated Experts</h3><p>A multidisciplinary team with design, development, marketing, and IT expertise.</p></div>
+  </div>
+</section>
+
+<section class="cta">
+  <h2 class="reveal">Ready to take the quantum leap?</h2>
+  <p class="reveal">
+    Start your next website, app, AI tool, digital campaign, or full business platform with Quantum Leap Solution.
+  </p>
+  <div class="actions reveal" style="justify-content:center">
+    <a class="btn" href="mailto:qlsolution.us@gmail.com?subject=Project Inquiry from Website&body=Hello Quantum Leap Solution,%0D%0A%0D%0AI want to start a project.%0D%0A%0D%0AName:%0D%0AProject Type:%0D%0ABudget:%0D%0ATimeline:%0D%0APhone:%0D%0A%0D%0AThank you.">Email Project Template</a>
+    <a class="btn ghost" target="_blank" href="https://wa.me/94757544000?text=Hello%20Quantum%20Leap%20Solution%2C%20I%20want%20to%20start%20a%20project.%0A%0AProject%20Type%3A%0ABudget%3A%0ATimeline%3A">Connect on WhatsApp</a>
+  </div>
+</section>
+
+<div class="whatsapp-chat">
+  <button class="whatsapp-float" onclick="toggleWhatsAppBot()" aria-label="Open WhatsApp chat">
+    <svg viewBox="0 0 32 32" aria-hidden="true">
+      <path fill="currentColor" d="M16.04 3C8.86 3 3.03 8.74 3.03 15.82c0 2.25.6 4.45 1.73 6.38L3 29l6.97-1.79a13.1 13.1 0 0 0 6.07 1.5c7.18 0 13.01-5.75 13.01-12.83C29.05 8.74 23.22 3 16.04 3Zm0 23.52c-1.86 0-3.68-.49-5.27-1.43l-.38-.23-4.14 1.06 1.11-4.01-.25-.41a10.37 10.37 0 0 1-1.61-5.68c0-5.84 4.73-10.59 10.54-10.59s10.54 4.75 10.54 10.59-4.73 10.7-10.54 10.7Zm5.77-7.92c-.32-.16-1.87-.91-2.16-1.02-.29-.1-.5-.16-.71.16-.21.31-.82 1.02-1.01 1.23-.18.21-.37.24-.69.08-.32-.16-1.34-.49-2.55-1.56-.94-.84-1.58-1.88-1.76-2.2-.18-.31-.02-.48.14-.64.14-.14.32-.37.48-.55.16-.18.21-.31.32-.52.1-.21.05-.39-.03-.55-.08-.16-.71-1.7-.98-2.33-.26-.62-.52-.53-.71-.54h-.61c-.21 0-.55.08-.84.39-.29.31-1.1 1.08-1.1 2.62s1.13 3.04 1.29 3.25c.16.21 2.22 3.37 5.38 4.73.75.32 1.34.51 1.8.65.76.24 1.45.21 1.99.13.61-.09 1.87-.76 2.14-1.5.26-.73.26-1.36.18-1.5-.08-.13-.29-.21-.61-.37Z"/>
+    </svg>
+  </button>
+
+  <div class="whatsapp-bot" id="whatsappBot">
+    <div class="bot-head">
+      <strong>Quantum Leap Solution</strong>
+      <button onclick="toggleWhatsAppBot()" aria-label="Close WhatsApp chat">×</button>
+    </div>
+    <div class="bot-body">
+      <p class="bot-msg">Hi 👋 How can we help you today?</p>
+      <button onclick="sendWhatsApp('I need a website for my business')">I need a website</button>
+      <button onclick="sendWhatsApp('I need a mobile app development quotation')">I need a mobile app</button>
+      <button onclick="sendWhatsApp('I need digital marketing services')">I need digital marketing</button>
+      <button onclick="sendWhatsApp('I need pricing details for QLS services')">Send me pricing details</button>
+      <textarea id="customQuestion" placeholder="Type your question here..."></textarea>
+      <button onclick="sendCustomWhatsApp()">Send my question on WhatsApp</button>
+    </div>
+  </div>
+</div>
+
+<footer class="pro-footer">
+  <div class="footer-glow"></div>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <img src="assets/icon.png" alt="Quantum Leap Solution Logo">
+      <h3>Quantum Leap Solution</h3>
+      <p>
+        A full-spectrum digital and IT service provider building websites,
+        apps, AI tools, cloud systems, cybersecurity solutions, branding,
+        and digital growth platforms.
+      </p>
+      <div class="footer-socials">
+        <a href="https://www.facebook.com/share/1JNDVyB9mD/" target="_blank">fb</a>
+        <a href="https://www.linkedin.com/company/quantum-leap-solution/" target="_blank">in</a>
+        <a href="https://www.instagram.com/qlsolution.us" target="_blank">ig</a>
+        <a href="https://x.com/QLSolution_us" target="_blank">𝕏</a>
+      </div>
+    </div>
+
+    <div>
+      <h4>Quick Links</h4>
+      <a href="#home">Home</a>
+      <a href="aboout.html">About</a>
+      <a href="services.html">Services</a>
+      <a href="projects.html">Our Projects</a>
+      <a href="contact.html">Contact Us</a>
+    </div>
+
+    <div>
+      <h4>Services</h4>
+      <a href="#services">Web Development</a>
+      <a href="#services">Mobile Apps</a>
+      <a href="#services">AI & ML</a>
+      <a href="#services">Digital Marketing</a>
+      <a href="#services">Cloud & Security</a>
+    </div>
+
+    <div>
+      <h4>Contact</h4>
+      <p>qlsolution.us@gmail.com</p>
+      <p>+94 75 754 4000</p>
+      <p>Headquarters: 8560 116th St, Richmond Hill, NY, CT
+        <br>Office Location:
+        25/8 Sri Dharmarama Road, Ratmalana, 10390</p>
+      <a class="footer-btn" href="mailto:qlsolution.us@gmail.com?subject=Project Inquiry">Email Us</a>
+      <a class="footer-btn dark" href="https://wa.me/94757544000" target="_blank">WhatsApp</a>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <span>© 2026 Quantum Leap Solution. All rights reserved.</span>
+    <span>Innovate · Elevate · Accelerate</span>
+  </div>
+</footer>
+
+<script>
+/* PARTICLE BACKGROUND */
+const canvas=document.getElementById("particles");
+const ctx=canvas.getContext("2d");
+let particles=[];
+function resize(){
+  canvas.width=innerWidth;
+  canvas.height=innerHeight;
+}
+resize();
+addEventListener("resize",resize);
+
+for(let i=0;i<95;i++){
+  particles.push({
+    x:Math.random()*innerWidth,
+    y:Math.random()*innerHeight,
+    r:Math.random()*2+0.5,
+    vx:(Math.random()-.5)*.35,
+    vy:(Math.random()-.5)*.35
+  });
+}
+function draw(){
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  ctx.fillStyle="rgba(255,255,255,.75)";
+  particles.forEach(p=>{
+    p.x+=p.vx;p.y+=p.vy;
+    if(p.x<0||p.x>canvas.width)p.vx*=-1;
+    if(p.y<0||p.y>canvas.height)p.vy*=-1;
+    ctx.beginPath();
+    ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+    ctx.fill();
+  });
+  for(let i=0;i<particles.length;i++){
+    for(let j=i+1;j<particles.length;j++){
+      const a=particles[i],b=particles[j];
+      const d=Math.hypot(a.x-b.x,a.y-b.y);
+      if(d<120){
+        ctx.strokeStyle=`rgba(255,255,255,${.08-d/1600})`;
+        ctx.lineWidth=1;
+        ctx.beginPath();
+        ctx.moveTo(a.x,a.y);
+        ctx.lineTo(b.x,b.y);
+        ctx.stroke();
+      }
+    }
+  }
+  requestAnimationFrame(draw);
+}
+draw();
+
+/* REVEAL */
+const observer=new IntersectionObserver(entries=>{
+  entries.forEach(entry=>{
+    if(entry.isIntersecting)entry.target.classList.add("show");
+  });
+},{threshold:.12});
+document.querySelectorAll(".reveal").forEach(el=>observer.observe(el));
+
+/* 3D CARD MOUSE LIGHT */
+document.querySelectorAll(".card").forEach(card=>{
+  card.addEventListener("mousemove",e=>{
+    const rect=card.getBoundingClientRect();
+    card.style.setProperty("--x",`${e.clientX-rect.left}px`);
+    card.style.setProperty("--y",`${e.clientY-rect.top}px`);
+  });
+});
+
+/* CLOSE MOBILE MENU ON CLICK */
+document.querySelectorAll(".links a").forEach(a=>{
+  a.addEventListener("click",()=>{
+    document.querySelector(".links").classList.remove("active");
+  });
+});
+
+
+/* PREMIUM CURSOR */
+const dot=document.querySelector(".cursor-dot");
+const ring=document.querySelector(".cursor-ring");
+let mouseX=0,mouseY=0,ringX=0,ringY=0;
+document.addEventListener("mousemove",e=>{
+  mouseX=e.clientX;mouseY=e.clientY;
+  if(dot){dot.style.left=mouseX+"px";dot.style.top=mouseY+"px";}
+});
+function animateCursor(){
+  ringX+=(mouseX-ringX)*0.18;
+  ringY+=(mouseY-ringY)*0.18;
+  if(ring){ring.style.left=ringX+"px";ring.style.top=ringY+"px";}
+  requestAnimationFrame(animateCursor);
+}
+animateCursor();
+document.querySelectorAll("a,button,.card").forEach(el=>{
+  el.addEventListener("mouseenter",()=>{if(ring){ring.style.width="70px";ring.style.height="70px";}});
+  el.addEventListener("mouseleave",()=>{if(ring){ring.style.width="42px";ring.style.height="42px";}});
+});
+
+/* WHATSAPP CHAT BOT */
+function toggleWhatsAppBot(){
+  document.getElementById("whatsappBot").classList.toggle("active");
+}
+function sendWhatsApp(message){
+  const number="94757544000";
+  const url=`https://wa.me/${number}?text=${encodeURIComponent("Hello Quantum Leap Solution, "+message)}`;
+  window.open(url,"_blank");
+}
+function sendCustomWhatsApp(){
+  const question=document.getElementById("customQuestion").value.trim();
+  if(!question){alert("Please type your question first.");return;}
+  const number="94757544000";
+  const message=`Hello Quantum Leap Solution, I have a question: ${question}`;
+  window.open(`https://wa.me/${number}?text=${encodeURIComponent(message)}`,"_blank");
+}
+
+</script>
+
+</body>
+</html>

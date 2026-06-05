@@ -1,0 +1,1485 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>Our Projects - QLS</title>
+    
+    <!-- Website Icon -->
+    <link rel="icon" type="image/png" href="assets/icon.png">
+    <link rel="shortcut icon" href="assets/icon.png">
+    <link rel="apple-touch-icon" href="assets/icon.png">
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+
+<style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    :root{
+      --bg:#000;
+      --bg2:#080808;
+      --card:#0d0d0d;
+      --white:#fff;
+      --muted:rgba(255,255,255,.62);
+      --line:rgba(255,255,255,.12);
+      --soft:rgba(255,255,255,.06);
+    }
+    html{scroll-behavior:smooth}
+    body{
+      font-family:Inter,sans-serif;
+      background:var(--bg);
+      color:var(--white);
+      overflow-x:hidden;
+    }
+    body::before{
+      content:"";
+      position:fixed;
+      inset:0;
+      background:
+        radial-gradient(circle at 20% 20%,rgba(255,255,255,.08),transparent 25%),
+        radial-gradient(circle at 80% 30%,rgba(255,255,255,.06),transparent 30%),
+        linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),
+        linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px);
+      background-size:auto,auto,70px 70px,70px 70px;
+      pointer-events:none;
+      z-index:-3;
+    }
+    canvas#particles{
+      position:fixed;
+      inset:0;
+      z-index:-2;
+    }
+    a{text-decoration:none;color:inherit}
+    section{padding:110px 6%}
+    .nav{
+      position:fixed;
+      top:0;
+      width:100%;
+      z-index:999;
+      padding:18px 6%;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      background:rgba(0,0,0,.65);
+      backdrop-filter:blur(18px);
+      border-bottom:1px solid var(--line);
+    }
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:14px;
+      font-weight:900;
+      letter-spacing:.08em;
+    }
+    .brand img{
+      width:54px;
+      height:54px;
+      object-fit:contain;
+      filter:drop-shadow(0 0 18px rgba(255,255,255,.35));
+    }
+    .links{
+      display:flex;
+      align-items:center;
+      gap:30px;
+    }
+    .links a{
+      color:var(--muted);
+      font-size:13px;
+      font-weight:800;
+      text-transform:uppercase;
+    }
+    .links a:hover{color:#fff}
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      padding:15px 28px;
+      border-radius:999px;
+      background:#fff;
+      color:#000!important;
+      font-weight:900;
+      border:1px solid #fff;
+      transition:.3s;
+    }
+    .btn:hover{
+      transform:translateY(-4px) scale(1.03);
+      box-shadow:0 0 40px rgba(255,255,255,.28);
+    }
+    .btn.ghost{
+      background:transparent;
+      color:#fff!important;
+    }
+    .btn.ghost:hover{background:#fff;color:#000!important}
+    .menu{display:none;background:none;border:0;color:#fff;font-size:30px}
+    
+    /* HERO */
+    .hero{
+      min-height:100vh;
+      display:grid;
+      grid-template-columns:1.05fr .95fr;
+      align-items:center;
+      gap:50px;
+      padding:150px 6% 80px;
+      position:relative;
+    }
+    .eyebrow{
+      display:inline-flex;
+      border:1px solid var(--line);
+      padding:10px 18px;
+      border-radius:999px;
+      color:var(--muted);
+      margin-bottom:28px;
+      background:rgba(255,255,255,.04);
+    }
+    h1{
+      font-family:Syne,Inter,sans-serif;
+      font-size:clamp(48px,7vw,112px);
+      line-height:.92;
+      letter-spacing:-.07em;
+      margin-bottom:28px;
+    }
+    h1 span{
+      color:#000;
+      -webkit-text-stroke:1.5px #fff;
+      text-shadow:0 0 30px rgba(255,255,255,.15);
+    }
+    .hero p{
+      max-width:680px;
+      color:var(--muted);
+      font-size:19px;
+      line-height:1.8;
+    }
+    .actions{
+      display:flex;
+      gap:16px;
+      flex-wrap:wrap;
+      margin-top:38px;
+    }
+    .stats{
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:12px;
+      margin-top:48px;
+    }
+    .stat{
+      border:1px solid var(--line);
+      padding:22px;
+      border-radius:24px;
+      background:rgba(255,255,255,.035);
+    }
+    .stat strong{
+      display:block;
+      font-size:28px;
+      font-weight:900;
+    }
+    .stat small{
+      color:var(--muted);
+      font-size:12px;
+      text-transform:uppercase;
+    }
+    
+    /* 3D QLS MODEL */
+    .model-scene{
+      min-height:600px;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      perspective:1200px;
+    }
+    .qls-3d{
+      position:relative;
+      width:min(440px,80vw);
+      height:min(440px,80vw);
+      transform-style:preserve-3d;
+      animation:floatModel 6s ease-in-out infinite;
+    }
+    .logo-orb{
+      position:absolute;
+      inset:0;
+      border-radius:50%;
+      background:
+        radial-gradient(circle at 35% 25%,rgba(255,255,255,.95),rgba(255,255,255,.18) 25%,rgba(255,255,255,.03) 55%,transparent 72%);
+      border:1px solid rgba(255,255,255,.22);
+      box-shadow:
+        inset 0 0 55px rgba(255,255,255,.18),
+        0 0 80px rgba(255,255,255,.18);
+      transform:rotateX(65deg) rotateZ(35deg);
+    }
+    .logo-core{
+      position:absolute;
+      inset:20%;
+      border-radius:50%;
+      background:#fff;
+      mask:url("assets/logo.png") center/contain no-repeat;
+      -webkit-mask:url("assets/logo.png") center/contain no-repeat;
+      filter:drop-shadow(0 0 35px white);
+      animation:spinCore 10s linear infinite;
+    }
+    .ring{
+      position:absolute;
+      inset:8%;
+      border:2px solid rgba(255,255,255,.35);
+      border-radius:50%;
+      transform-style:preserve-3d;
+      animation:spinRing 9s linear infinite;
+    }
+    .ring.r2{
+      inset:16%;
+      animation-duration:13s;
+      transform:rotateX(80deg);
+    }
+    .ring.r3{
+      inset:2%;
+      animation-duration:17s;
+      transform:rotateY(70deg);
+    }
+    .dots span{
+      position:absolute;
+      width:5px;
+      height:5px;
+      background:#fff;
+      border-radius:50%;
+      box-shadow:0 0 12px #fff;
+      animation:spark 3s ease-in-out infinite;
+    }
+    .dots span:nth-child(1){top:18%;left:10%}
+    .dots span:nth-child(2){top:70%;left:85%;animation-delay:.4s}
+    .dots span:nth-child(3){top:10%;left:75%;animation-delay:.8s}
+    .dots span:nth-child(4){top:82%;left:22%;animation-delay:1.2s}
+    @keyframes floatModel{
+      0%,100%{transform:translateY(0) rotateX(0) rotateY(0)}
+      50%{transform:translateY(-25px) rotateX(8deg) rotateY(-12deg)}
+    }
+    @keyframes spinCore{to{transform:rotateY(360deg)}}
+    @keyframes spinRing{to{transform:rotateZ(360deg) rotateX(360deg)}}
+    @keyframes spark{50%{transform:scale(2);opacity:.4}}
+    
+    /* COMMON */
+    .section-head{
+      max-width:850px;
+      margin-bottom:55px;
+    }
+    .label{
+      color:var(--muted);
+      text-transform:uppercase;
+      letter-spacing:.18em;
+      font-size:13px;
+      font-weight:900;
+      margin-bottom:16px;
+    }
+    h2{
+      font-family:Syne,Inter,sans-serif;
+      font-size:clamp(34px,5vw,72px);
+      line-height:1;
+      letter-spacing:-.05em;
+    }
+    .section-head p{
+      margin-top:20px;
+      color:var(--muted);
+      font-size:18px;
+      line-height:1.8;
+    }
+    .grid{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:22px;
+    }
+    .card{
+      position:relative;
+      min-height:280px;
+      padding:32px;
+      border:1px solid var(--line);
+      border-radius:30px;
+      background:linear-gradient(145deg,rgba(255,255,255,.08),rgba(255,255,255,.015));
+      transform-style:preserve-3d;
+      transition:.35s;
+      overflow:hidden;
+    }
+    .card::before{
+      content:"";
+      position:absolute;
+      inset:-1px;
+      background:radial-gradient(circle at var(--x,50%) var(--y,50%),rgba(255,255,255,.18),transparent 35%);
+      opacity:0;
+      transition:.3s;
+    }
+    .card:hover::before{opacity:1}
+    .card:hover{
+      transform:translateY(-12px) rotateX(8deg) rotateY(-8deg);
+      border-color:rgba(255,255,255,.32);
+    }
+    .icon{
+      width:72px;
+      height:72px;
+      border-radius:22px;
+      border:1px solid var(--line);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:30px;
+      margin-bottom:26px;
+      background:#fff;
+      color:#000;
+      box-shadow:0 18px 40px rgba(255,255,255,.12);
+    }
+    .card h3{
+      font-size:22px;
+      margin-bottom:12px;
+    }
+    .card p{
+      color:var(--muted);
+      line-height:1.75;
+    }
+    
+    /* MARQUEE */
+    .marquee{
+      overflow:hidden;
+      border-block:1px solid var(--line);
+      background:#050505;
+      padding:24px 0;
+    }
+    .track{
+      display:flex;
+      gap:38px;
+      width:max-content;
+      animation:marquee 28s linear infinite;
+    }
+    .track span{
+      font-size:14px;
+      font-weight:900;
+      text-transform:uppercase;
+      letter-spacing:.2em;
+      color:rgba(255,255,255,.45);
+    }
+    @keyframes marquee{to{transform:translateX(-50%)}}
+    
+    /* SPLIT */
+    .split{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:40px;
+      align-items:center;
+    }
+    .glass{
+      border:1px solid var(--line);
+      border-radius:34px;
+      padding:42px;
+      background:rgba(255,255,255,.04);
+    }
+    .glass p{
+      color:var(--muted);
+      line-height:1.8;
+      margin-top:18px;
+    }
+    .process{
+      counter-reset:step;
+    }
+    .step{
+      border-left:1px solid var(--line);
+      padding:0 0 42px 32px;
+      position:relative;
+    }
+    .step::before{
+      counter-increment:step;
+      content:"0" counter(step);
+      position:absolute;
+      left:-28px;
+      top:0;
+      width:56px;
+      height:56px;
+      border-radius:50%;
+      background:#fff;
+      color:#000;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-weight:900;
+    }
+    .step h3{font-size:26px;margin-bottom:10px}
+    .step p{color:var(--muted);line-height:1.7}
+    
+    /* CTA */
+    .cta{
+      text-align:center;
+      border-top:1px solid var(--line);
+      border-bottom:1px solid var(--line);
+      background:
+        radial-gradient(circle at center,rgba(255,255,255,.11),transparent 45%),
+        #030303;
+    }
+    .cta p{
+      color:var(--muted);
+      max-width:720px;
+      margin:22px auto 36px;
+      font-size:18px;
+      line-height:1.8;
+    }
+    
+    /* FLOAT BUTTONS */
+    .whatsapp,.mail{
+      position:fixed;
+      right:22px;
+      z-index:999;
+      padding:14px 20px;
+      border-radius:999px;
+      font-weight:900;
+      box-shadow:0 0 30px rgba(255,255,255,.18);
+    }
+    .whatsapp{
+      bottom:22px;
+      background:#fff;
+      color:#000;
+    }
+    .mail{
+      bottom:78px;
+      border:1px solid var(--line);
+      background:#000;
+      color:#fff;
+    }
+    
+    /* FOOTER */
+    footer{
+      padding:60px 6%;
+      display:flex;
+      justify-content:space-between;
+      gap:25px;
+      flex-wrap:wrap;
+      color:var(--muted);
+      border-top:1px solid var(--line);
+    }
+    footer strong{color:#fff}
+    
+    /* REVEAL */
+    .reveal{
+      opacity:0;
+      transform:translateY(40px);
+      transition:1s ease;
+    }
+    .reveal.show{
+      opacity:1;
+      transform:translateY(0);
+    }
+    
+    /* MOBILE */
+    @media(max-width:980px){
+      .hero,.split{grid-template-columns:1fr}
+      .model-scene{min-height:420px}
+      .grid{grid-template-columns:1fr 1fr}
+      .stats{grid-template-columns:1fr 1fr}
+    }
+    @media(max-width:720px){
+      section{padding:80px 5%}
+      .hero{padding:130px 5% 60px}
+      .links{
+        display:none;
+        position:absolute;
+        top:91px;
+        left:0;
+        width:100%;
+        background:#000;
+        border-bottom:1px solid var(--line);
+        padding:25px;
+        flex-direction:column;
+        align-items:flex-start;
+      }
+      .links.active{display:flex}
+      .menu{display:block}
+      .grid,.stats{grid-template-columns:1fr}
+      .brand span{display:none}
+      h1{font-size:52px}
+      .mail{display:none}
+    }
+    
+    
+    /* PREMIUM CURSOR */
+    .cursor-dot,.cursor-ring{position:fixed;top:0;left:0;pointer-events:none;z-index:99999;transform:translate(-50%,-50%)}
+    .cursor-dot{width:9px;height:9px;background:#fff;border-radius:50%;box-shadow:0 0 18px #fff}
+    .cursor-ring{width:42px;height:42px;border:1px solid rgba(255,255,255,.55);border-radius:50%;transition:width .2s,height .2s;mix-blend-mode:difference}
+    
+    /* EXTRA 3D MOTION */
+    .card,.glass,.stat,.footer-grid>div{transform-style:preserve-3d;will-change:transform}
+    .card:hover,.glass:hover,.stat:hover{transform:perspective(900px) translateY(-12px) rotateX(9deg) rotateY(-9deg) scale(1.02);box-shadow:0 30px 90px rgba(255,255,255,.08),inset 0 0 30px rgba(255,255,255,.05)}
+    .icon{animation:iconFloat 4s ease-in-out infinite}
+    @keyframes iconFloat{0%,100%{transform:translateZ(20px) translateY(0)}50%{transform:translateZ(40px) translateY(-8px)}}
+    
+    /* WHATSAPP CHAT BOT */
+    .whatsapp-chat{position:fixed;right:22px;bottom:22px;z-index:9999}
+    .whatsapp-float{width:66px;height:66px;border-radius:50%;border:1px solid rgba(255,255,255,.25);background:#fff;color:#000;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 0 35px rgba(255,255,255,.35);animation:whatsappPulse 2s infinite}
+    .whatsapp-float svg{width:36px;height:36px}
+    @keyframes whatsappPulse{0%{box-shadow:0 0 0 0 rgba(255,255,255,.35)}70%{box-shadow:0 0 0 18px rgba(255,255,255,0)}100%{box-shadow:0 0 0 0 rgba(255,255,255,0)}}
+    .whatsapp-bot{position:absolute;right:0;bottom:82px;width:330px;background:#050505;border:1px solid rgba(255,255,255,.16);border-radius:24px;overflow:hidden;box-shadow:0 25px 90px rgba(0,0,0,.75);transform:scale(.8) translateY(30px);opacity:0;pointer-events:none;transition:.3s ease}
+    .whatsapp-bot.active{transform:scale(1) translateY(0);opacity:1;pointer-events:auto}
+    .bot-head{padding:18px 20px;display:flex;justify-content:space-between;align-items:center;background:#fff;color:#000}
+    .bot-head button{border:0;background:#000;color:#fff;width:28px;height:28px;border-radius:50%;cursor:pointer}
+    .bot-body{padding:18px}
+    .bot-msg{background:rgba(255,255,255,.08);padding:12px 14px;border-radius:16px;margin-bottom:14px;color:#fff}
+    .bot-body button{width:100%;padding:12px;margin:7px 0;border-radius:14px;border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.06);color:#fff;cursor:pointer;text-align:left;transition:.25s}
+    .bot-body button:hover{background:#fff;color:#000;transform:translateX(4px)}
+    .bot-body textarea{width:100%;height:80px;margin-top:10px;border-radius:14px;border:1px solid rgba(255,255,255,.14);background:#000;color:#fff;padding:12px;resize:none;outline:none}
+    
+    /* PROFESSIONAL FOOTER */
+    .pro-footer{position:relative;padding:90px 6% 30px;background:radial-gradient(circle at 20% 10%,rgba(255,255,255,.08),transparent 30%),linear-gradient(180deg,#030303,#000);border-top:1px solid rgba(255,255,255,.12);overflow:hidden;display:block;color:var(--muted)}
+    .footer-glow{position:absolute;width:380px;height:380px;border-radius:50%;background:rgba(255,255,255,.06);filter:blur(80px);right:-120px;top:-120px}
+    .footer-grid{position:relative;display:grid;grid-template-columns:2fr 1fr 1fr 1.2fr;gap:40px;z-index:2}
+    .footer-brand img{width:78px;margin-bottom:18px;filter:drop-shadow(0 0 22px rgba(255,255,255,.35))}
+    .footer-brand h3{font-size:26px;margin-bottom:12px;color:#fff}
+    .footer-brand p,.pro-footer p{color:rgba(255,255,255,.6);line-height:1.8}
+    .pro-footer h4{font-size:15px;text-transform:uppercase;letter-spacing:.15em;margin-bottom:18px;color:#fff}
+    .pro-footer a{display:block;color:rgba(255,255,255,.62);margin-bottom:12px;transition:.25s}
+    .pro-footer a:hover{color:#fff;transform:translateX(5px)}
+    .footer-socials{display:flex;gap:10px;margin-top:22px}
+    .footer-socials a{width:36px;height:36px;border:1px solid rgba(255,255,255,.18);border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:900;margin:0}
+    .footer-btn{margin-top:14px;padding:12px 18px;border-radius:999px;background:#fff;color:#000!important;text-align:center;font-weight:800}
+    .footer-btn.dark{background:transparent;border:1px solid rgba(255,255,255,.2);color:#fff!important}
+    .footer-bottom{position:relative;z-index:2;margin-top:55px;padding-top:24px;border-top:1px solid rgba(255,255,255,.12);display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;color:rgba(255,255,255,.45);font-size:14px}
+    @media(max-width:900px){.footer-grid{grid-template-columns:1fr 1fr}}
+    @media(max-width:600px){.footer-grid{grid-template-columns:1fr}.whatsapp-bot{width:300px;right:-5px}.cursor-dot,.cursor-ring{display:none}}
+    
+    
+    
+    </style>
+</head>
+
+</head>
+
+
+<div class="project-modal" id="projectModal">
+    <div class="project-form-box">
+      <button class="project-close" onclick="closeProjectForm()">×</button>
+  
+      <h2>Start Your Project</h2>
+      <p>Fill the details below and choose Email or WhatsApp to send your inquiry.</p>
+  
+      <form id="projectForm">
+        <input type="text" id="clientName" placeholder="Your Name" required>
+        <input type="email" id="clientEmail" placeholder="Your Email" required>
+        <input type="tel" id="clientPhone" placeholder="Contact Number" required>
+  
+        <select id="projectType" required>
+          <option value="">Select Project Type</option>
+          <option>Website Development</option>
+          <option>Mobile App Development</option>
+          <option>Web Application</option>
+          <option>Digital Marketing</option>
+          <option>AI / Automation</option>
+          <option>Branding</option>
+          <option>Other</option>
+        </select>
+  
+        <input type="text" id="budget" placeholder="Estimated Budget">
+        <input type="text" id="timeline" placeholder="Expected Timeline">
+  
+        <textarea id="message" placeholder="Tell us about your project"></textarea>
+  
+        <div class="project-actions">
+          <button type="button" onclick="sendProjectEmail()">Send via Email</button>
+          <button type="button" class="whatsapp-send" onclick="sendProjectWhatsApp()">Send via WhatsApp</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+
+  <style>
+    .project-modal{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.78);
+  backdrop-filter:blur(14px);
+  z-index:99999;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+  opacity:0;
+  pointer-events:none;
+  transition:.35s ease;
+}
+
+.project-modal.active{
+  opacity:1;
+  pointer-events:auto;
+}
+
+.project-form-box{
+  position:relative;
+  width:100%;
+  max-width:560px;
+  background:linear-gradient(145deg,rgba(255,255,255,.12),rgba(255,255,255,.03));
+  border:1px solid rgba(255,255,255,.18);
+  border-radius:30px;
+  padding:34px;
+  box-shadow:0 30px 100px rgba(0,0,0,.85), inset 0 0 35px rgba(255,255,255,.04);
+  transform:translateY(45px) scale(.88) rotateX(12deg);
+  opacity:0;
+  transition:.45s ease;
+  animation:formGlow 4s ease-in-out infinite;
+}
+
+.project-modal.active .project-form-box{
+  transform:translateY(0) scale(1) rotateX(0);
+  opacity:1;
+}
+
+.project-form-box h2{
+  font-size:34px;
+  margin-bottom:10px;
+}
+
+.project-form-box p{
+  color:rgba(255,255,255,.62);
+  line-height:1.6;
+  margin-bottom:22px;
+}
+
+.project-close{
+  position:absolute;
+  top:18px;
+  right:18px;
+  width:36px;
+  height:36px;
+  border-radius:50%;
+  border:1px solid rgba(255,255,255,.18);
+  background:#fff;
+  color:#000;
+  font-size:24px;
+  cursor:pointer;
+}
+
+.project-form-box input,
+.project-form-box select,
+.project-form-box textarea{
+  width:100%;
+  margin-bottom:13px;
+  padding:15px 16px;
+  border-radius:16px;
+  border:1px solid rgba(255,255,255,.14);
+  background:rgba(0,0,0,.55);
+  color:#fff;
+  outline:none;
+  font-family:Inter,sans-serif;
+}
+
+.project-form-box textarea{
+  min-height:105px;
+  resize:none;
+}
+
+.project-form-box input::placeholder,
+.project-form-box textarea::placeholder{
+  color:rgba(255,255,255,.45);
+}
+
+.project-form-box select option{
+  background:#000;
+  color:#fff;
+}
+
+.project-actions{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+  margin-top:8px;
+}
+
+.project-actions button{
+  padding:15px 18px;
+  border-radius:999px;
+  border:1px solid #fff;
+  background:#fff;
+  color:#000;
+  font-weight:900;
+  cursor:pointer;
+  transition:.3s ease;
+}
+
+.project-actions button:hover{
+  transform:translateY(-4px);
+  box-shadow:0 0 35px rgba(255,255,255,.25);
+}
+
+.project-actions .whatsapp-send{
+  background:transparent;
+  color:#fff;
+}
+
+.project-actions .whatsapp-send:hover{
+  background:#fff;
+  color:#000;
+}
+
+@keyframes formGlow{
+  0%,100%{box-shadow:0 30px 100px rgba(0,0,0,.85),0 0 20px rgba(255,255,255,.08)}
+  50%{box-shadow:0 30px 100px rgba(0,0,0,.85),0 0 45px rgba(255,255,255,.18)}
+}
+
+@media(max-width:600px){
+  .project-form-box{
+    padding:26px 20px;
+    border-radius:24px;
+    max-height:90vh;
+    overflow-y:auto;
+  }
+
+  .project-form-box h2{
+    font-size:28px;
+  }
+
+  .project-actions{
+    grid-template-columns:1fr;
+  }
+}
+  </style>
+
+  <script>
+    function openProjectForm(){
+  document.getElementById("projectModal").classList.add("active");
+}
+
+function closeProjectForm(){
+  document.getElementById("projectModal").classList.remove("active");
+}
+
+function getProjectFormMessage(){
+  const name = document.getElementById("clientName").value.trim();
+  const email = document.getElementById("clientEmail").value.trim();
+  const phone = document.getElementById("clientPhone").value.trim();
+  const type = document.getElementById("projectType").value.trim();
+  const budget = document.getElementById("budget").value.trim();
+  const timeline = document.getElementById("timeline").value.trim();
+  const message = document.getElementById("message").value.trim();
+
+  if(!name || !email || !phone || !type){
+    alert("Please fill Name, Email, Contact Number, and Project Type.");
+    return null;
+  }
+
+  return `Hello Quantum Leap Solution,
+
+I would like to start a new project.
+
+Client Details:
+Name: ${name}
+Email: ${email}
+Contact Number: ${phone}
+
+Project Details:
+Project Type: ${type}
+Estimated Budget: ${budget || "Not mentioned"}
+Expected Timeline: ${timeline || "Not mentioned"}
+
+Project Message:
+${message || "Not mentioned"}
+
+Thank you.`;
+}
+
+function sendProjectEmail(){
+  const body = getProjectFormMessage();
+  if(!body) return;
+
+  const subject = "New Project Inquiry";
+  const email = "qlsolution.us@gmail.com";
+
+  window.location.href = `mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+}
+
+function sendProjectWhatsApp(){
+  const body = getProjectFormMessage();
+  if(!body) return;
+
+  const number = "94757544000";
+  window.open(`https://wa.me/${number}?text=${encodeURIComponent(body)}`, "_blank");
+}
+
+document.addEventListener("keydown", function(e){
+  if(e.key === "Escape"){
+    closeProjectForm();
+  }
+});
+
+document.getElementById("projectModal").addEventListener("click", function(e){
+  if(e.target === this){
+    closeProjectForm();
+  }
+});
+  </script>
+
+<script>
+    /* 3D MODEL ICON MOUSE MOTION */
+const qlsModel = document.getElementById("qlsModel");
+
+if(qlsModel){
+  qlsModel.addEventListener("mousemove", e => {
+    const rect = qlsModel.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+
+    const rotateY = ((x / rect.width) - 0.5) * 24;
+    const rotateX = ((y / rect.height) - 0.5) * -24;
+
+    qlsModel.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+  });
+
+  qlsModel.addEventListener("mouseleave", () => {
+    qlsModel.style.transform = "";
+  });
+}
+</script>
+
+<body>
+
+    <canvas id="particles"></canvas>
+    <div class="cursor-dot"></div>
+    <div class="cursor-ring"></div>
+    
+    <nav class="nav">
+      <a href="index.html" class="brand">
+        <img src="assets/icon.png" alt="Quantum Leap Solution Logo">
+        <span>QUANTUM LEAP SOLUTION</span>
+      </a>
+    
+      <button class="menu" onclick="document.querySelector('.links').classList.toggle('active')">☰</button>
+    
+      <div class="links">
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="services.html">Services</a>
+        <a href="projects.html">Our Projects</a>
+        <a href="contact.html">Contact Us</a>
+        <a class="btn" href="javascript:void(0)" onclick="openProjectForm()">Start Project</a>
+      </div>
+    </nav>
+
+<!-- OUR PROJECTS SECTION START -->
+<section class="qls-projects-section" id="projects">
+  <div class="qls-projects-head reveal">
+    <span>Our Projects</span>
+    <h1>Portfolio highlights crafted by Quantum Leap Solution.</h1>
+    <p>
+      Explore our selected digital projects, including business websites, eCommerce stores,
+      web applications, education platforms, and professional brand experiences.
+    </p>
+  </div>
+
+  <div class="qls-projects-grid" id="qlsProjectsGrid"></div>
+</section>
+
+<style>
+  /* OUR PROJECTS SECTION */
+.qls-projects-section{
+  padding:150px 6% 90px;
+}
+
+.qls-projects-head{
+  max-width:980px;
+  margin:0 auto 65px;
+  text-align:center;
+}
+
+.qls-projects-head span{
+  display:block;
+  color:var(--muted);
+  text-transform:uppercase;
+  letter-spacing:.25em;
+  font-size:13px;
+  font-weight:900;
+  margin-bottom:18px;
+}
+
+.qls-projects-head h1{
+  font-size:clamp(44px,6vw,88px);
+  line-height:1;
+  letter-spacing:-.06em;
+  margin-bottom:24px;
+}
+
+.qls-projects-head p{
+  max-width:780px;
+  margin:0 auto;
+  color:var(--muted);
+  font-size:18px;
+  line-height:1.8;
+}
+
+.qls-projects-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:26px;
+}
+
+.qls-project-card{
+  position:relative;
+  border:1px solid var(--line);
+  border-radius:30px;
+  overflow:hidden;
+  background:linear-gradient(145deg,rgba(255,255,255,.08),rgba(255,255,255,.015));
+  transition:.35s ease;
+}
+
+.qls-project-card:hover{
+  transform:translateY(-10px);
+  border-color:rgba(255,255,255,.35);
+  box-shadow:0 30px 90px rgba(255,255,255,.09);
+}
+
+.qls-project-image{
+  position:relative;
+  overflow:hidden;
+  background:#050505;
+}
+
+.qls-project-image img{
+  width:100%;
+  height:270px;
+  object-fit:cover;
+  display:block;
+  filter:grayscale(15%);
+  transition:.45s ease;
+}
+
+.qls-project-card:hover img{
+  transform:scale(1.06);
+  filter:grayscale(0%);
+}
+
+.qls-project-badge{
+  position:absolute;
+  top:18px;
+  left:18px;
+  padding:9px 14px;
+  border-radius:999px;
+  background:rgba(0,0,0,.72);
+  border:1px solid rgba(255,255,255,.18);
+  color:#fff;
+  font-size:11px;
+  font-weight:900;
+  text-transform:uppercase;
+  letter-spacing:.14em;
+  backdrop-filter:blur(10px);
+}
+
+.qls-project-info{
+  padding:24px;
+}
+
+.qls-project-info span{
+  display:block;
+  color:var(--muted);
+  text-transform:uppercase;
+  letter-spacing:.15em;
+  font-size:11px;
+  font-weight:900;
+  margin-bottom:10px;
+}
+
+.qls-project-info h3{
+  font-size:23px;
+  margin-bottom:12px;
+  color:#fff;
+}
+
+.qls-project-info p{
+  color:var(--muted);
+  line-height:1.7;
+  font-size:15px;
+}
+
+.qls-project-tags{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  margin-top:18px;
+}
+
+.qls-project-tags small{
+  padding:8px 11px;
+  border-radius:999px;
+  background:rgba(255,255,255,.05);
+  border:1px solid var(--line);
+  color:rgba(255,255,255,.7);
+  font-size:11px;
+  font-weight:800;
+}
+
+.qls-project-actions{
+  display:flex;
+  gap:10px;
+  margin-top:22px;
+}
+
+.qls-project-actions button{
+  flex:1;
+  padding:12px 14px;
+  border-radius:999px;
+  border:1px solid #fff;
+  background:#fff;
+  color:#000;
+  font-weight:900;
+  cursor:pointer;
+  transition:.3s ease;
+}
+
+.qls-project-actions button:last-child{
+  background:transparent;
+  color:#fff;
+}
+
+.qls-project-actions button:hover{
+  transform:translateY(-3px);
+  box-shadow:0 0 25px rgba(255,255,255,.22);
+}
+
+.qls-project-actions button:last-child:hover{
+  background:#fff;
+  color:#000;
+}
+
+@media(max-width:1100px){
+  .qls-projects-grid{
+    grid-template-columns:repeat(2,1fr);
+  }
+}
+
+@media(max-width:720px){
+  .qls-projects-section{
+    padding:120px 20px 60px;
+  }
+
+  .qls-projects-head{
+    margin-bottom:42px;
+  }
+
+  .qls-projects-head h1{
+    font-size:42px;
+  }
+
+  .qls-projects-head p{
+    font-size:15px;
+  }
+
+  .qls-projects-grid{
+    grid-template-columns:1fr;
+    gap:20px;
+  }
+
+  .qls-project-card{
+    border-radius:24px;
+  }
+
+  .qls-project-image img{
+    height:auto;
+  }
+
+  .qls-project-info{
+    padding:22px;
+  }
+
+  .qls-project-actions{
+    flex-direction:column;
+  }
+}
+
+
+/* PROJECT CARD IMAGE FIX */
+.qls-project-image img {
+  width: 100%;
+  height: auto !important; /* allow the full image height */
+  max-height: 320px; /* optional, adjust to fit your layout */
+  object-fit: contain; /* keeps the entire laptop screen visible */
+  display: block;
+  filter: grayscale(15%);
+  transition: .45s ease;
+}
+
+.qls-project-card:hover img {
+  transform: scale(1.03);
+  filter: grayscale(0%);
+}
+</style>
+
+<script>
+  const qlsProjects = [
+    {
+      image:"assets/project/1.png",
+      title:"Houseful Interior",
+      category:"Interior Brand Website",
+      badge:"Website",
+      desc:"Custom website for a premium furniture brand in Sri Lanka with a modern, elegant, and fully responsive design.",
+      tags:["Web Design","Responsive","Brand Website"]
+    },
+    {
+      image:"assets/project/2.png",
+      title:"Sadique Caterers",
+      category:"Catering Brand Website",
+      badge:"Website",
+      desc:"Elegant catering website designed to improve online presence, showcase services, and increase customer trust.",
+      tags:["Catering","Responsive","Modern UI"]
+    },
+    {
+      image:"assets/project/3.png",
+      title:"Steel Furnimart (Pvt) Ltd",
+      category:"Manufacturing Website",
+      badge:"Website",
+      desc:"Professional website for a leading steel furniture manufacturer with product-focused layout and mobile-friendly design.",
+      tags:["Manufacturing","Products","Responsive"]
+    },
+    {
+      image:"assets/project/4.png",
+      title:"Zigzag Fashion Store",
+      category:"Fashion Brand Website",
+      badge:"Fashion",
+      desc:"Modern fashion website built for strong visual branding, smooth shopping experience, and better customer engagement.",
+      tags:["Fashion","eCommerce","Branding"]
+    },
+    {
+      image:"assets/project/5.png",
+      title:"Hardware Management System",
+      category:"Web Application",
+      badge:"System",
+      desc:"Custom hardware management system with user-friendly dashboard, inventory tracking, and secure asset management.",
+      tags:["Dashboard","Inventory","Management"]
+    },
+    {
+      image:"assets/project/6.png",
+      title:"Hardware Store LK",
+      category:"Online Hardware Store",
+      badge:"eCommerce",
+      desc:"Complete eCommerce store for hardware products with wide product collections, shopping features, and reliable structure.",
+      tags:["eCommerce","Hardware","Online Store"]
+    },
+    {
+      image:"assets/project/7.png",
+      title:"Perera Driving School",
+      category:"Driving School Website",
+      badge:"Website",
+      desc:"Responsive website for a driving school with registration features, service details, and improved online visibility.",
+      tags:["Education","Registration","Responsive"]
+    },
+    {
+      image:"assets/project/8.png",
+      title:"STEAM Education Africa",
+      category:"Education Platform",
+      badge:"Education",
+      desc:"Impact-driven education platform designed to showcase STEAM programs, mission, and community engagement across Africa.",
+      tags:["STEAM","Education","Impact"]
+    },
+    {
+      image:"assets/project/9.png",
+      title:"Techxoetic Technology Solutions",
+      category:"Technology Solutions Website",
+      badge:"Tech",
+      desc:"Professional technology website built to showcase services, improve brand credibility, and support client engagement.",
+      tags:["Technology","Business","Professional"]
+    },
+    {
+      image:"assets/project/10.png",
+      title:"Flow Plant-Powered Wellness",
+      category:"Wellness eCommerce Store",
+      badge:"eCommerce",
+      desc:"Modern plant-based wellness eCommerce website designed for clear product presentation and improved conversions.",
+      tags:["Wellness","eCommerce","Modern UI"]
+    },
+    {
+      image:"assets/project/11.png",
+      title:"Mile-X Equipment Solutions",
+      category:"Automotive eCommerce Store",
+      badge:"eCommerce",
+      desc:"Automotive and garage equipment store with responsive shopping experience, product browsing, and sales-focused design.",
+      tags:["Automotive","Equipment","Online Store"]
+    },
+    {
+      image:"assets/project/12.png",
+      title:"Allbirds Fashion eCommerce Store",
+      category:"Fashion eCommerce Store",
+      badge:"Fashion",
+      desc:"Clean and minimal eCommerce experience built for fashion products with strong visual layout and customer-focused flow.",
+      tags:["Fashion","eCommerce","Minimal Design"]
+    },
+    {
+      image:"assets/project/13.png",
+      title:"TACMinds Enterprise IT Training",
+      category:"Training & Consulting Website",
+      badge:"Consulting",
+      desc:"Professional website for enterprise IT training and consulting with service highlights, credibility, and conversion focus.",
+      tags:["Training","Consulting","Enterprise IT"]
+    }
+  ];
+  
+  function loadQlsProjects(){
+    const grid = document.getElementById("qlsProjectsGrid");
+    if(!grid) return;
+  
+    grid.innerHTML = qlsProjects.map(project => `
+      <div class="qls-project-card reveal">
+        <div class="qls-project-image">
+          <img src="${project.image}" alt="${project.title}">
+          <div class="qls-project-badge">${project.badge}</div>
+        </div>
+  
+        <div class="qls-project-info">
+          <span>${project.category}</span>
+          <h3>${project.title}</h3>
+          <p>${project.desc}</p>
+  
+          <div class="qls-project-tags">
+            ${project.tags.map(tag => `<small>${tag}</small>`).join("")}
+          </div>
+  
+          
+        </div>
+      </div>
+    `).join("");
+  }
+  
+  function sendProjectInquiry(projectTitle){
+    const email = "qlsolution.us@gmail.com";
+    const subject = `Project Inquiry - ${projectTitle}`;
+    const body = `Hello Quantum Leap Solution,
+  
+  I viewed your project: ${projectTitle}.
+  
+  I am interested in creating a similar website / system / digital solution for my business.
+  
+  Please share more details about:
+  - Pricing
+  - Timeline
+  - Required content
+  - Development process
+  - Next steps
+  
+  My Details:
+  Name:
+  Phone:
+  Business Name:
+  Project Requirement:
+  
+  Thank you.`;
+  
+    window.location.href =
+      `mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  }
+  
+  function sendProjectWhatsAppInquiry(projectTitle){
+    const number = "94757544000";
+    const message = `Hello Quantum Leap Solution,
+  
+  I viewed your project: ${projectTitle}.
+  
+  I am interested in creating a similar website / system / digital solution for my business.
+  
+  Please share more details about:
+  - Pricing
+  - Timeline
+  - Required content
+  - Development process
+  - Next steps
+  
+  My Details:
+  Name:
+  Phone:
+  Business Name:
+  Project Requirement:`;
+  
+    window.open(`https://wa.me/${number}?text=${encodeURIComponent(message)}`, "_blank");
+  }
+  
+  loadQlsProjects();
+  </script>
+<!-- OUR PROJECTS SECTION END -->
+
+<div class="whatsapp-chat">
+  <button class="whatsapp-float" onclick="toggleWhatsAppBot()" aria-label="Open WhatsApp chat">
+    <svg viewBox="0 0 32 32">
+      <path fill="currentColor" d="M16.04 3C8.86 3 3.03 8.74 3.03 15.82c0 2.25.6 4.45 1.73 6.38L3 29l6.97-1.79a13.1 13.1 0 0 0 6.07 1.5c7.18 0 13.01-5.75 13.01-12.83C29.05 8.74 23.22 3 16.04 3Zm0 23.52c-1.86 0-3.68-.49-5.27-1.43l-.38-.23-4.14 1.06 1.11-4.01-.25-.41a10.37 10.37 0 0 1-1.61-5.68c0-5.84 4.73-10.59 10.54-10.59s10.54 4.75 10.54 10.59-4.73 10.7-10.54 10.7Zm5.77-7.92c-.32-.16-1.87-.91-2.16-1.02-.29-.1-.5-.16-.71.16-.21.31-.82 1.02-1.01 1.23-.18.21-.37.24-.69.08-.32-.16-1.34-.49-2.55-1.56-.94-.84-1.58-1.88-1.76-2.2-.18-.31-.02-.48.14-.64.14-.14.32-.37.48-.55.16-.18.21-.31.32-.52.1-.21.05-.39-.03-.55-.08-.16-.71-1.7-.98-2.33-.26-.62-.52-.53-.71-.54h-.61c-.21 0-.55.08-.84.39-.29.31-1.1 1.08-1.1 2.62s1.13 3.04 1.29 3.25c.16.21 2.22 3.37 5.38 4.73.75.32 1.34.51 1.8.65.76.24 1.45.21 1.99.13.61-.09 1.87-.76 2.14-1.5.26-.73.26-1.36.18-1.5-.08-.13-.29-.21-.61-.37Z"/>
+    </svg>
+  </button>
+
+  <div class="whatsapp-bot" id="whatsappBot">
+    <div class="bot-head">
+      <strong>Quantum Leap Solution</strong>
+      <button onclick="toggleWhatsAppBot()">×</button>
+    </div>
+    <div class="bot-body">
+      <p class="bot-msg">Hi 👋 How can we help you today?</p>
+      <button onclick="sendWhatsApp('I need a website for my business')">I need a website</button>
+      <button onclick="sendWhatsApp('I need a mobile app development quotation')">I need a mobile app</button>
+      <button onclick="sendWhatsApp('I need digital marketing services')">I need digital marketing</button>
+      <button onclick="sendWhatsApp('I need pricing details for QLS services')">Send me pricing details</button>
+      <textarea id="customQuestion" placeholder="Type your question here..."></textarea>
+      <button onclick="sendCustomWhatsApp()">Send my question on WhatsApp</button>
+    </div>
+  </div>
+</div>
+
+<footer class="pro-footer">
+    <div class="footer-glow"></div>
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <img src="assets/icon.png" alt="Quantum Leap Solution Logo">
+        <h3>Quantum Leap Solution</h3>
+        <p>
+          A full-spectrum digital and IT service provider building websites,
+          apps, AI tools, cloud systems, cybersecurity solutions, branding,
+          and digital growth platforms.
+        </p>
+        <div class="footer-socials">
+          <a href="https://www.facebook.com/share/1JNDVyB9mD/" target="_blank">fb</a>
+          <a href="https://www.linkedin.com/company/quantum-leap-solution/" target="_blank">in</a>
+          <a href="https://www.instagram.com/qlsolution.us" target="_blank">ig</a>
+          <a href="https://x.com/QLSolution_us" target="_blank">𝕏</a>
+        </div>
+      </div>
+  
+      <div>
+        <h4>Quick Links</h4>
+        <a href="index.html">Home</a>
+        <a href="about.html">About Us</a>
+        <a href="services.html">Services</a>
+        <a href="projects.html">Our Projects</a>
+        <a href="contact.html">Contact Us</a>
+      </div>
+  
+      <div>
+        <h4>Services</h4>
+        <a href="services.html">Web Development</a>
+        <a href="services.html">Mobile Apps</a>
+        <a href="services.html">AI & ML</a>
+        <a href="services.html">Digital Marketing</a>
+        <a href="services.html">Cloud & Security</a>
+      </div>
+  
+      <div>
+        <h4>Contact</h4>
+        <p>qlsolution.us@gmail.com</p>
+        <p>+94 75 754 4000</p>
+        <p>Headquarters: 8560 116th St, Richmond Hill, NY, CT
+          <br>Office Location:
+          25/8 Sri Dharmarama Road, Ratmalana, 10390</p>
+        <a class="footer-btn" href="mailto:qlsolution.us@gmail.com?subject=Project Inquiry">Email Us</a>
+        <a class="footer-btn dark" href="https://wa.me/94757544000" target="_blank">WhatsApp</a>
+      </div>
+    </div>
+  
+    <div class="footer-bottom">
+      <span>© 2026 Quantum Leap Solution. All rights reserved.</span>
+      <span>Innovate · Elevate · Accelerate</span>
+    </div>
+  </footer>
+  
+  <script>
+  /* PARTICLE BACKGROUND */
+  const canvas=document.getElementById("particles");
+  const ctx=canvas.getContext("2d");
+  let particles=[];
+  function resize(){
+    canvas.width=innerWidth;
+    canvas.height=innerHeight;
+  }
+  resize();
+  addEventListener("resize",resize);
+  
+  for(let i=0;i<95;i++){
+    particles.push({
+      x:Math.random()*innerWidth,
+      y:Math.random()*innerHeight,
+      r:Math.random()*2+0.5,
+      vx:(Math.random()-.5)*.35,
+      vy:(Math.random()-.5)*.35
+    });
+  }
+  function draw(){
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    ctx.fillStyle="rgba(255,255,255,.75)";
+    particles.forEach(p=>{
+      p.x+=p.vx;p.y+=p.vy;
+      if(p.x<0||p.x>canvas.width)p.vx*=-1;
+      if(p.y<0||p.y>canvas.height)p.vy*=-1;
+      ctx.beginPath();
+      ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+      ctx.fill();
+    });
+    for(let i=0;i<particles.length;i++){
+      for(let j=i+1;j<particles.length;j++){
+        const a=particles[i],b=particles[j];
+        const d=Math.hypot(a.x-b.x,a.y-b.y);
+        if(d<120){
+          ctx.strokeStyle=`rgba(255,255,255,${.08-d/1600})`;
+          ctx.lineWidth=1;
+          ctx.beginPath();
+          ctx.moveTo(a.x,a.y);
+          ctx.lineTo(b.x,b.y);
+          ctx.stroke();
+        }
+      }
+    }
+    requestAnimationFrame(draw);
+  }
+  draw();
+  
+  /* REVEAL */
+  const observer=new IntersectionObserver(entries=>{
+    entries.forEach(entry=>{
+      if(entry.isIntersecting)entry.target.classList.add("show");
+    });
+  },{threshold:.12});
+  document.querySelectorAll(".reveal").forEach(el=>observer.observe(el));
+  
+  /* 3D CARD MOUSE LIGHT */
+  document.querySelectorAll(".card").forEach(card=>{
+    card.addEventListener("mousemove",e=>{
+      const rect=card.getBoundingClientRect();
+      card.style.setProperty("--x",`${e.clientX-rect.left}px`);
+      card.style.setProperty("--y",`${e.clientY-rect.top}px`);
+    });
+  });
+  
+  /* CLOSE MOBILE MENU ON CLICK */
+  document.querySelectorAll(".links a").forEach(a=>{
+    a.addEventListener("click",()=>{
+      document.querySelector(".links").classList.remove("active");
+    });
+  });
+  
+  
+  /* PREMIUM CURSOR */
+  const dot=document.querySelector(".cursor-dot");
+  const ring=document.querySelector(".cursor-ring");
+  let mouseX=0,mouseY=0,ringX=0,ringY=0;
+  document.addEventListener("mousemove",e=>{
+    mouseX=e.clientX;mouseY=e.clientY;
+    if(dot){dot.style.left=mouseX+"px";dot.style.top=mouseY+"px";}
+  });
+  function animateCursor(){
+    ringX+=(mouseX-ringX)*0.18;
+    ringY+=(mouseY-ringY)*0.18;
+    if(ring){ring.style.left=ringX+"px";ring.style.top=ringY+"px";}
+    requestAnimationFrame(animateCursor);
+  }
+  animateCursor();
+  document.querySelectorAll("a,button,.card").forEach(el=>{
+    el.addEventListener("mouseenter",()=>{if(ring){ring.style.width="70px";ring.style.height="70px";}});
+    el.addEventListener("mouseleave",()=>{if(ring){ring.style.width="42px";ring.style.height="42px";}});
+  });
+  
+  /* WHATSAPP CHAT BOT */
+  function toggleWhatsAppBot(){
+    document.getElementById("whatsappBot").classList.toggle("active");
+  }
+  function sendWhatsApp(message){
+    const number="94757544000";
+    const url=`https://wa.me/${number}?text=${encodeURIComponent("Hello Quantum Leap Solution, "+message)}`;
+    window.open(url,"_blank");
+  }
+  function sendCustomWhatsApp(){
+    const question=document.getElementById("customQuestion").value.trim();
+    if(!question){alert("Please type your question first.");return;}
+    const number="94757544000";
+    const message=`Hello Quantum Leap Solution, I have a question: ${question}`;
+    window.open(`https://wa.me/${number}?text=${encodeURIComponent(message)}`,"_blank");
+  }
+  
+  </script>
+  
+  </body>
+  </html>
