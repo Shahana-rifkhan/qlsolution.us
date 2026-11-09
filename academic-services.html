@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="#050505" name="theme-color"/>
+<meta content="Ethical, expert academic support from Quantum Leap Solution - tutoring, research guidance, editing, data support, presentations, and career documents for learners from certificate to postgraduate level." name="description"/>
+<title>Academic Support - QLS</title>
+<link href="assets/icon.png" rel="icon" type="image/png"/>
+<link href="assets/icon.png" rel="apple-touch-icon"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="icons/css/all.min.css" rel="stylesheet"/>
+<link href="site.css" rel="stylesheet"/>
+<style>
+/* Academic Support - page-only visual system */
+.page-academic { --academic-ivory:#f1efe9; --academic-ink:#101010; --academic-gold:#d2b276; background:#050505; }
+.academic-hero { position:relative; min-height:100svh; padding:142px 0 72px; display:flex; align-items:center; overflow:hidden; }
+.academic-hero::before { content:""; position:absolute; width:720px; height:720px; left:-470px; top:6%; border:1px solid rgba(255,255,255,.08); border-radius:50%; box-shadow:0 0 0 90px rgba(255,255,255,.012),0 0 0 180px rgba(255,255,255,.006); }
+.academic-hero-grid { position:relative; display:grid; grid-template-columns:minmax(0,1fr) minmax(430px,.92fr); gap:clamp(34px,6vw,88px); align-items:center; }
+.academic-hero-copy h1 { margin-top:20px; max-width:760px; font-size:clamp(3.45rem,6.5vw,6.75rem); }
+.academic-hero-copy h1 span { display:block; }
+.academic-hero-copy > p { max-width:660px; margin:26px 0 30px; color:#b7b7bb; font-size:clamp(1.03rem,1.5vw,1.18rem); line-height:1.8; }
+.academic-trust-row { display:flex; flex-wrap:wrap; gap:10px; margin-top:28px; }
+.academic-trust-row span { display:inline-flex; align-items:center; gap:8px; padding:9px 12px; border:1px solid var(--line); border-radius:999px; color:#c7c7ca; background:rgba(255,255,255,.025); font-size:11px; font-weight:700; }
+.academic-trust-row i { color:#fff; }
+.academic-hero-visual { position:relative; }
+.academic-hero-image { position:relative; margin:0; aspect-ratio:4/5; overflow:hidden; border:1px solid rgba(255,255,255,.2); border-radius:38px; background:#101010; box-shadow:0 42px 120px rgba(0,0,0,.62); }
+.academic-hero-image::after { content:""; position:absolute; inset:0; background:linear-gradient(180deg,transparent 58%,rgba(0,0,0,.88)); pointer-events:none; }
+.academic-hero-image img { width:100%; height:100%; object-fit:cover; object-position:63% center; }
+.academic-hero-image figcaption { position:absolute; z-index:2; inset:auto 0 0; padding:28px; display:grid; gap:7px; }
+.academic-hero-image figcaption span { color:#bcbcc0; font-size:9px; font-weight:800; letter-spacing:.16em; text-transform:uppercase; }
+.academic-hero-image figcaption strong { max-width:410px; font:700 clamp(1.25rem,2vw,1.7rem)/1.2 Manrope,sans-serif; }
+.academic-float { position:absolute; z-index:4; display:flex; align-items:center; gap:12px; padding:13px 15px; border:1px solid rgba(255,255,255,.2); border-radius:17px; background:rgba(6,6,7,.86); backdrop-filter:blur(14px); box-shadow:0 18px 50px rgba(0,0,0,.45); }
+.academic-float i { width:34px; height:34px; display:grid; place-items:center; border-radius:11px; background:#fff; color:#050505; }
+.academic-float span { display:grid; }
+.academic-float strong { font-size:12px; }
+.academic-float small { color:#8f8f94; font-size:9px; margin-top:2px; }
+.academic-float.one { left:-38px; top:15%; }
+.academic-float.two { right:-28px; top:45%; }
+.academic-float.three { left:-20px; bottom:9%; }
+.academic-marquee { overflow:hidden; border-block:1px solid var(--line); background:#0a0a0b; }
+.academic-marquee .marquee-track { animation-duration:38s; }
+.academic-intro-grid { display:grid; grid-template-columns:.85fr 1.15fr; gap:clamp(32px,6vw,90px); align-items:start; }
+.academic-intro-copy { position:sticky; top:120px; }
+.academic-intro-copy h2 { margin-top:15px; }
+.academic-intro-copy p { margin-top:20px; color:var(--muted); }
+.academic-principles { display:grid; gap:12px; }
+.academic-principle { display:grid; grid-template-columns:auto 1fr; gap:17px; padding:22px; border:1px solid var(--line); border-radius:21px; background:linear-gradient(145deg,rgba(255,255,255,.06),rgba(255,255,255,.012)); }
+.academic-principle > span { width:43px; height:43px; display:grid; place-items:center; border-radius:14px; background:#fff; color:#050505; font-weight:800; }
+.academic-principle h3 { font-size:1.12rem; }
+.academic-principle p { color:var(--muted); margin-top:7px; font-size:14px; }
+.academic-services-section { background:var(--academic-ivory); color:var(--academic-ink); }
+.academic-services-section h2,.academic-services-section h3 { color:var(--academic-ink); }
+.academic-services-section .eyebrow { color:#555; }
+.academic-services-section .section-heading p { color:#686868; }
+.academic-service-grid { display:grid; grid-template-columns:repeat(12,1fr); gap:16px; }
+.academic-service-card { grid-column:span 4; min-height:360px; padding:26px; display:flex; flex-direction:column; border:1px solid #dbd8d0; border-radius:28px; background:#fff; box-shadow:0 18px 45px rgba(0,0,0,.06); transition:transform .3s var(--ease),box-shadow .3s; }
+.academic-service-card:nth-child(1),.academic-service-card:nth-child(5) { grid-column:span 8; }
+.academic-service-card:hover { transform:translateY(-7px); box-shadow:0 28px 65px rgba(0,0,0,.11); }
+.academic-service-card .service-top { display:flex; justify-content:space-between; gap:20px; align-items:flex-start; }
+.academic-service-card .icon-tile { background:#111; color:#fff; border:0; box-shadow:none; }
+.academic-service-card .service-number { color:#aaa; font:800 10px/1 Manrope,sans-serif; letter-spacing:.14em; }
+.academic-service-card h3 { margin-top:auto; font-size:clamp(1.45rem,2.3vw,2rem); }
+.academic-service-card p { margin-top:13px; color:#676767; font-size:14px; }
+.academic-service-card ul { list-style:none; padding:16px 0 0; margin:18px 0 0; border-top:1px solid #eceae5; display:flex; flex-wrap:wrap; gap:7px; }
+.academic-service-card li { padding:6px 9px; border-radius:999px; background:#f1f0ec; color:#555; font-size:10px; font-weight:700; }
+.academic-image-story { display:grid; grid-template-columns:1.05fr .95fr; gap:18px; }
+.academic-image-card { position:relative; min-height:520px; margin:0; overflow:hidden; border-radius:34px; border:1px solid var(--line); background:#111; }
+.academic-image-card img { width:100%; height:100%; object-fit:cover; }
+.academic-image-card::after { content:""; position:absolute; inset:0; background:linear-gradient(180deg,transparent 48%,rgba(0,0,0,.9)); }
+.academic-image-card figcaption { position:absolute; z-index:2; inset:auto 0 0; padding:30px; }
+.academic-image-card figcaption span { color:#b4b4b8; font-size:9px; font-weight:800; letter-spacing:.14em; text-transform:uppercase; }
+.academic-image-card figcaption h3 { margin-top:8px; font-size:clamp(1.6rem,3vw,2.7rem); }
+.academic-image-card figcaption p { max-width:540px; margin-top:12px; color:#c2c2c5; }
+.academic-image-card.secondary { min-height:520px; }
+.academic-levels { display:flex; flex-wrap:wrap; justify-content:center; gap:10px; max-width:1000px; margin:0 auto; }
+.academic-levels span { padding:11px 15px; border:1px solid var(--line); border-radius:999px; background:#0c0c0d; color:#c6c6ca; font-size:12px; font-weight:700; }
+.academic-integrity { padding:clamp(34px,6vw,72px); display:grid; grid-template-columns:.8fr 1.2fr; gap:clamp(26px,6vw,80px); align-items:center; border:1px solid #d7d4cc; border-radius:40px; background:var(--academic-ivory); color:#111; }
+.academic-integrity .eyebrow { color:#555; }
+.academic-integrity h2 { color:#111; margin-top:15px; }
+.academic-integrity p { color:#555; }
+.academic-integrity-list { display:grid; gap:13px; }
+.academic-integrity-list div { display:grid; grid-template-columns:auto 1fr; gap:13px; align-items:start; padding:16px 0; border-bottom:1px solid #d9d6ce; }
+.academic-integrity-list div:last-child { border-bottom:0; }
+.academic-integrity-list i { width:32px; height:32px; display:grid; place-items:center; border-radius:50%; background:#111; color:#fff; font-size:11px; }
+.academic-integrity-list strong { display:block; font-family:Manrope,sans-serif; }
+.academic-integrity-list small { display:block; margin-top:4px; color:#666; line-height:1.55; }
+.academic-review-note { max-width:760px; margin:15px auto 0; color:#777; font-size:11px; line-height:1.6; }
+.page-academic .review-tile { min-height:300px; }
+.page-academic .review-tile-foot span { color:#888; }
+.academic-process .engagement-card { min-height:460px; }
+.academic-subjects { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; }
+.academic-subject { min-height:165px; padding:20px; display:flex; flex-direction:column; justify-content:space-between; border:1px solid var(--line); border-radius:20px; background:linear-gradient(145deg,rgba(255,255,255,.055),rgba(255,255,255,.012)); }
+.academic-subject i { color:#fff; font-size:20px; }
+.academic-subject strong { font:700 1rem/1.25 Manrope,sans-serif; }
+@media (max-width:1060px) {
+  .academic-hero-grid { grid-template-columns:1fr .82fr; }
+  .academic-float.two { right:-10px; }
+  .academic-service-card,.academic-service-card:nth-child(1),.academic-service-card:nth-child(5) { grid-column:span 6; }
+  .academic-subjects { grid-template-columns:repeat(3,1fr); }
+}
+@media (max-width:840px) {
+  .academic-hero { min-height:auto; padding:126px 0 66px; }
+  .academic-hero-grid { grid-template-columns:1fr; }
+  .academic-hero-copy h1 { max-width:900px; font-size:clamp(3rem,10vw,5rem); }
+  .academic-hero-image { aspect-ratio:16/10; }
+  .academic-hero-image img { object-position:center 48%; }
+  .academic-float { display:none; }
+  .academic-intro-grid,.academic-image-story,.academic-integrity { grid-template-columns:1fr; }
+  .academic-intro-copy { position:static; }
+  .academic-image-card,.academic-image-card.secondary { min-height:430px; }
+  .academic-subjects { grid-template-columns:repeat(2,1fr); }
+}
+@media (max-width:620px) {
+  .academic-hero { padding:112px 0 48px; }
+  .academic-hero-copy h1 { font-size:clamp(2.6rem,13vw,3.8rem); }
+  .academic-hero-copy h1 span { display:inline; }
+  .academic-hero-copy > p { margin:21px 0 25px; font-size:1rem; }
+  .academic-trust-row { gap:7px; }
+  .academic-trust-row span { font-size:9px; padding:7px 9px; }
+  .academic-hero-image { aspect-ratio:4/3; border-radius:23px; }
+  .academic-hero-image figcaption { padding:20px; }
+  .academic-service-card,.academic-service-card:nth-child(n) { grid-column:1/-1; min-height:300px; border-radius:22px; }
+  .academic-image-card,.academic-image-card.secondary { min-height:390px; border-radius:24px; }
+  .academic-image-card figcaption { padding:22px; }
+  .academic-integrity { padding:28px 22px; border-radius:25px; }
+  .academic-subjects { grid-template-columns:1fr 1fr; gap:9px; }
+  .academic-subject { min-height:135px; padding:16px; }
+}
+
+/* ===== Mobile hardening ===== */
+html, body.page-academic { overflow-x: hidden; max-width: 100%; }
+.page-academic img { max-width: 100%; height: auto; }
+
+/* Stop grid children from forcing horizontal overflow */
+.academic-hero-grid, .academic-intro-grid, .academic-image-story,
+.academic-integrity, .academic-service-grid, .academic-subjects { min-width: 0; }
+.academic-hero-grid > *, .academic-intro-grid > *, .academic-image-story > *,
+.academic-integrity > * { min-width: 0; }
+
+@media (max-width: 840px) {
+  .academic-hero-grid, .academic-intro-grid,
+  .academic-image-story, .academic-integrity { grid-template-columns: minmax(0,1fr); }
+  .academic-hero-image img, .academic-image-card img { height: 100%; }
+  .academic-hero::before { display: none; }
+}
+
+@media (max-width: 620px) {
+  .page-academic .container { padding-left: 18px; padding-right: 18px; }
+
+  /* Hero */
+  .academic-hero { padding: 104px 0 40px; }
+  .academic-hero-copy h1 { font-size: clamp(2.3rem, 11vw, 3.2rem); line-height: 1.08; }
+  .academic-hero-copy > p { font-size: .97rem; line-height: 1.7; }
+  .academic-hero .actions { display: grid; grid-template-columns: 1fr; gap: 10px; }
+  .academic-hero .actions .button { width: 100%; justify-content: center; }
+  .academic-trust-row span { font-size: 10px; }
+  .academic-hero-image { aspect-ratio: 4/3.4; }
+  .academic-hero-image figcaption strong { font-size: 1.05rem; }
+
+  /* Cards */
+  .academic-principle { grid-template-columns: 1fr; gap: 12px; padding: 18px; }
+  .academic-service-card, .academic-service-card:nth-child(n) { padding: 20px; min-height: 0; }
+  .academic-service-card h3 { margin-top: 28px; font-size: 1.35rem; }
+  .academic-image-card figcaption h3 { font-size: 1.4rem; }
+  .academic-image-card figcaption p { font-size: 13.5px; }
+
+  /* Levels + subjects */
+  .academic-levels { justify-content: flex-start; gap: 8px; }
+  .academic-levels span { font-size: 11px; padding: 9px 12px; }
+  .academic-subject strong { font-size: .92rem; }
+
+  /* Integrity block */
+  .academic-integrity-list div { grid-template-columns: 1fr; gap: 10px; }
+
+  /* Reviews slider */
+  .reviews-slider { position: relative; }
+  .reviews-arrow { display: none; }
+  .reviews-row { scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch; }
+  .page-academic .review-tile { min-width: 82vw; max-width: 82vw; scroll-snap-align: start; }
+
+  /* CTA + forms */
+  .cta-panel .actions { display: grid; gap: 10px; }
+  .cta-panel .actions .button { width: 100%; justify-content: center; }
+  .form-grid { grid-template-columns: 1fr; }
+  .form-actions { display: grid; grid-template-columns: 1fr; gap: 10px; }
+  .form-actions .button { width: 100%; justify-content: center; }
+  .modal-dialog { width: calc(100vw - 20px); max-height: 92svh; overflow-y: auto; }
+  input, select, textarea { font-size: 16px; } /* prevents iOS zoom on focus */
+
+  /* Keep content and floating widgets clear of the bottom contact bar */
+  .site-footer { padding-bottom: 84px; }
+  .whatsapp-widget, .back-to-top { bottom: 84px; }
+  .whatsapp-panel { width: calc(100vw - 28px); max-width: 360px; }
+}
+
+@media (max-width: 380px) {
+  .academic-subjects { grid-template-columns: 1fr; }
+  .academic-hero-copy h1 { font-size: 2.1rem; }
+}
+
+/* ===== Modal: mobile fix ===== */
+.modal { z-index: 3000 !important; }          /* above the sticky header (and anything else) */
+.site-header { z-index: 1000; }
+
+@media (max-width: 620px) {
+  .modal {
+    position: fixed !important;
+    inset: 0 !important;
+    padding: 0 !important;
+    display: flex;
+    align-items: flex-end;                     /* bottom-sheet style */
+    background: rgba(0,0,0,.72);
+  }
+  .modal-dialog {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    max-height: 92dvh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    border-radius: 24px 24px 0 0 !important;
+    transform: none !important;
+  }
+  .modal-head {
+    flex: 0 0 auto;
+    padding: 16px 18px 14px !important;
+    gap: 12px;
+  }
+  .modal-head h3 { font-size: 1.25rem; line-height: 1.2; }
+  .modal-head .icon-button { width: 40px; height: 40px; flex: 0 0 auto; }
+  .modal-body {
+    flex: 1 1 auto;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+    padding: 16px 18px calc(24px + env(safe-area-inset-bottom)) !important;
+  }
+  .modal-body > .muted { font-size: 14px; line-height: 1.6; margin-bottom: 16px !important; }
+
+  .form-grid { grid-template-columns: 1fr !important; gap: 14px; }
+  .form-grid .field.full { grid-column: auto; }
+  .field label { font-size: 12px; margin-bottom: 6px; }
+  .field input, .field select { min-height: 48px; padding: 0 14px; font-size: 16px; }
+  .field textarea { min-height: 110px; font-size: 16px; }
+  .form-actions { display: grid !important; grid-template-columns: 1fr; gap: 10px; }
+  .form-actions .button { width: 100%; justify-content: center; }
+}
+
+</style>
+</head>
+<body class="page-academic">
+<a class="skip-link" href="#main-content">Skip to main content</a>
+<div aria-hidden="true" class="scroll-progress"></div>
+<header class="site-header">
+<div class="container navbar">
+<a aria-label="Quantum Leap Solution home" class="brand" href="index.html">
+<img alt="Quantum Leap Solution logo" src="assets/icon.png"/>
+<span class="brand-text"><strong>QUANTUM LEAP SOLUTION</strong><small>INNOVATE · ELEVATE · ACCELERATE</small></span>
+</a>
+<button aria-controls="primary-navigation" aria-expanded="false" aria-label="Open navigation" class="nav-toggle" type="button"><i aria-hidden="true" class="fa-solid fa-bars"></i></button>
+<nav aria-label="Primary navigation" class="nav-links" id="primary-navigation">
+<a href="index.html">Home</a><a href="about.html">About</a><a href="services.html">Services</a><a aria-current="page" class="active" href="academic-services.html">Academic Support</a><a href="projects.html">Our Projects</a><a href="contact.html">Contact Us</a>
+<button class="button small" onclick="openProjectModal('Academic Support')" type="button"><i aria-hidden="true" class="fa-solid fa-arrow-up-right-dots"></i>Get Support</button>
+</nav>
+</div>
+<div aria-hidden="true" class="nav-overlay"></div>
+</header>
+
+<main id="main-content">
+<section class="academic-hero">
+<div class="container academic-hero-grid">
+<div class="academic-hero-copy">
+<span class="eyebrow reveal">Academic Support</span>
+<h1 class="reveal">Move forward with <span class="display-outline">clarity and confidence.</span></h1>
+<p class="reveal">Personalised guidance for assignments, research, dissertations, presentations, data, and professional documents-delivered by subject-aware specialists who help you strengthen your own work.</p>
+<div class="actions reveal"><button class="button" onclick="openProjectModal('Academic Support')" type="button">Discuss Your Requirement<i aria-hidden="true" class="fa-solid fa-arrow-right"></i></button><a class="button outline" href="#academic-services">Explore Support</a></div>
+<div class="academic-trust-row reveal"><span><i class="fa-solid fa-user-check"></i>Specialist guidance</span><span><i class="fa-solid fa-shield-halved"></i>Confidential</span><span><i class="fa-regular fa-clock"></i>Deadline-aware</span><span><i class="fa-solid fa-feather"></i>Ethical support</span></div>
+</div>
+<div class="academic-hero-visual reveal">
+<figure class="academic-hero-image">
+<img alt="Students and a mentor collaborating around a laptop and research materials" decoding="async" fetchpriority="high" height="960" src="assets/visuals/qls-academic-hero.png" width="1440"/>
+<figcaption><span>Learn · Improve · Progress</span><strong>Structured support around your level, subject, and deadline.</strong></figcaption>
+</figure>
+<div class="academic-float one"><i class="fa-solid fa-book-open"></i><span><strong>Clear direction</strong><small>From brief to action plan</small></span></div>
+<div class="academic-float two"><i class="fa-solid fa-microscope"></i><span><strong>Research support</strong><small>Method, structure, sources</small></span></div>
+</div>
+</div>
+</section>
+
+<div aria-label="Academic support areas" class="academic-marquee"><div class="marquee-track"><span class="marquee-item"><i class="fa-solid fa-pen-ruler"></i>Assignment Planning</span><span class="marquee-item"><i class="fa-solid fa-magnifying-glass-chart"></i>Research Guidance</span><span class="marquee-item"><i class="fa-solid fa-spell-check"></i>Editing &amp; Proofreading</span><span class="marquee-item"><i class="fa-solid fa-chart-column"></i>Data Support</span><span class="marquee-item"><i class="fa-solid fa-person-chalkboard"></i>Presentation Coaching</span><span class="marquee-item"><i class="fa-solid fa-file-lines"></i>Career Documents</span><span class="marquee-item"><i class="fa-solid fa-pen-ruler"></i>Assignment Planning</span><span class="marquee-item"><i class="fa-solid fa-magnifying-glass-chart"></i>Research Guidance</span><span class="marquee-item"><i class="fa-solid fa-spell-check"></i>Editing &amp; Proofreading</span><span class="marquee-item"><i class="fa-solid fa-chart-column"></i>Data Support</span><span class="marquee-item"><i class="fa-solid fa-person-chalkboard"></i>Presentation Coaching</span><span class="marquee-item"><i class="fa-solid fa-file-lines"></i>Career Documents</span></div></div>
+
+<section class="section">
+<div class="container academic-intro-grid">
+<div class="academic-intro-copy reveal"><span class="eyebrow">A Better Way to Get Help</span><h2>Support that builds your capability-not just your next deadline.</h2><p>Bring us your brief, marking criteria, draft, dataset, or research question. We help you understand the task, make stronger decisions, and improve the quality of what you submit or present.</p></div>
+<div class="academic-principles">
+<article class="academic-principle reveal"><span>01</span><div><h3>Understand the requirement</h3><p>We translate complex briefs and assessment criteria into a practical plan with clear priorities.</p></div></article>
+<article class="academic-principle reveal"><span>02</span><div><h3>Work with the right specialist</h3><p>Your support is matched to the discipline, academic level, software, referencing style, and type of output involved.</p></div></article>
+<article class="academic-principle reveal"><span>03</span><div><h3>Strengthen your own work</h3><p>Feedback focuses on reasoning, structure, evidence, clarity, and presentation so you can make informed revisions.</p></div></article>
+<article class="academic-principle reveal"><span>04</span><div><h3>Stay in control</h3><p>You approve the direction, remain the author, and receive a clear record of the guidance and changes discussed.</p></div></article>
+</div>
+</div>
+</section>
+
+<section class="section academic-services-section" id="academic-services">
+<div class="container">
+<div class="section-heading reveal"><span class="eyebrow">What We Support</span><h2>Practical expertise for every stage of the academic journey.</h2><p>Choose one focused service or combine several into a support plan shaped around your goal, current progress, and deadline.</p></div>
+<div class="academic-service-grid">
+<article class="academic-service-card reveal"><div class="service-top"><div class="icon-tile"><i class="fa-solid fa-route"></i></div><span class="service-number">01</span></div><h3>Assignment Planning &amp; Tutoring</h3><p>Break down the brief, identify the learning outcomes, build a realistic outline, and work through difficult concepts with focused one-to-one guidance.</p><ul><li>Brief analysis</li><li>Concept tutoring</li><li>Outline planning</li><li>Study strategy</li></ul></article>
+<article class="academic-service-card reveal"><div class="service-top"><div class="icon-tile"><i class="fa-solid fa-microscope"></i></div><span class="service-number">02</span></div><h3>Research &amp; Dissertation Guidance</h3><p>Develop a viable question, strengthen your literature search, choose an appropriate methodology, and organise each chapter with confidence.</p><ul><li>Research questions</li><li>Literature review</li><li>Methodology</li><li>Chapter planning</li></ul></article>
+<article class="academic-service-card reveal"><div class="service-top"><div class="icon-tile"><i class="fa-solid fa-spell-check"></i></div><span class="service-number">03</span></div><h3>Editing, Proofreading &amp; Referencing</h3><p>Improve clarity, flow, tone, grammar, citation consistency, and document presentation while preserving your meaning and voice.</p><ul><li>Language review</li><li>Structure feedback</li><li>Citation checks</li><li>Formatting</li></ul></article>
+<article class="academic-service-card reveal"><div class="service-top"><div class="icon-tile"><i class="fa-solid fa-chart-column"></i></div><span class="service-number">04</span></div><h3>Data, Coding &amp; Technical Support</h3><p>Get guided help with analysis planning, interpretation, code review, debugging, visualisation, and explaining technical results.</p><ul><li>Data analysis</li><li>Code review</li><li>Visualisation</li><li>Interpretation</li></ul></article>
+<article class="academic-service-card reveal"><div class="service-top"><div class="icon-tile"><i class="fa-solid fa-person-chalkboard"></i></div><span class="service-number">05</span></div><h3>Presentations, Viva &amp; Exam Preparation</h3><p>Turn complex material into a clear story, sharpen your slides, rehearse likely questions, and build a practical revision plan.</p><ul><li>Slide structure</li><li>Speaker notes</li><li>Mock questions</li><li>Revision planning</li></ul></article>
+<article class="academic-service-card reveal"><div class="service-top"><div class="icon-tile"><i class="fa-solid fa-briefcase"></i></div><span class="service-number">06</span></div><h3>Professional &amp; Career Documents</h3><p>Present your experience clearly through CVs, cover letters, personal statements, reports, proposals, and professional portfolios.</p><ul><li>CVs</li><li>Cover letters</li><li>Statements</li><li>Reports</li></ul></article>
+</div>
+</div>
+</section>
+
+<section class="section">
+<div class="container">
+<div class="section-heading center reveal"><span class="eyebrow">Expert Help, Human Approach</span><h2>Focused sessions. Thoughtful feedback. Visible progress.</h2><p>Our specialists combine academic expectations with practical communication, so you always know what to improve and why.</p></div>
+<div class="academic-image-story">
+<figure class="academic-image-card reveal"><img alt="Postgraduate researcher reviewing articles and data in a library workspace" loading="lazy" height="960" src="assets/visuals/qls-research-support.png" width="1440"/><figcaption><span>Research &amp; Analysis</span><h3>Turn a broad idea into a defensible research direction.</h3><p>Clarify the question, find stronger evidence, choose an appropriate method, and connect your results to the discussion.</p></figcaption></figure>
+<figure class="academic-image-card secondary reveal"><img alt="Academic mentor guiding a learner through a study plan on a tablet" loading="lazy" height="960" src="assets/visuals/qls-mentor-session.png" width="1440"/><figcaption><span>Mentoring &amp; Feedback</span><h3>Know your next best step.</h3><p>Leave each session with practical actions, clearer priorities, and feedback you can apply independently.</p></figcaption></figure>
+</div>
+</div>
+</section>
+
+<section class="section-sm">
+<div class="container">
+<div class="section-heading center reveal"><span class="eyebrow">Levels &amp; Learning Pathways</span><h2>Support calibrated to the standard you are working toward.</h2><p>The depth, language, and type of guidance are tailored to your qualification, institution, and assessment expectations.</p></div>
+<div class="academic-levels reveal"><span>Certificate</span><span>Diploma</span><span>Graduate Diploma</span><span>HND</span><span>NVQ</span><span>Bachelor's</span><span>Master's</span><span>Postgraduate</span><span>Doctoral Research</span><span>Professional Qualifications</span></div>
+</div>
+</section>
+
+<section class="section-sm">
+<div class="container">
+<div class="academic-integrity reveal">
+<div><span class="eyebrow">Academic Integrity</span><h2>Guidance you can use with confidence.</h2><p style="margin-top:18px">Our role is to help you learn, plan, improve, and communicate more effectively. You remain responsible for your ideas, decisions, final work, and compliance with your institution's policies.</p></div>
+<div class="academic-integrity-list">
+<div><i class="fa-solid fa-user-pen"></i><span><strong>You remain the author</strong><small>We coach, review, and explain; we do not impersonate learners or complete assessed work for submission as their own.</small></span></div>
+<div><i class="fa-solid fa-comments"></i><span><strong>Feedback is transparent</strong><small>Recommendations are explained so you understand the reasoning and can decide what to apply.</small></span></div>
+<div><i class="fa-solid fa-lock"></i><span><strong>Your information stays private</strong><small>Personal, institutional, and project information is handled confidentially within the support process.</small></span></div>
+</div>
+</div>
+</section>
+
+<section class="section" id="subjects">
+<div class="container">
+<div class="section-heading reveal"><span class="eyebrow">Subjects We Cover</span><h2>Broad coverage, matched to the right expertise.</h2><p>Share the module title and brief. We will confirm the best-fit specialist and the support we can provide before you commit.</p></div>
+<div class="academic-subjects">
+<article class="academic-subject reveal"><i class="fa-solid fa-laptop-code"></i><strong>IT, Computing &amp; Data</strong></article>
+<article class="academic-subject reveal"><i class="fa-solid fa-briefcase"></i><strong>Business &amp; Management</strong></article>
+<article class="academic-subject reveal"><i class="fa-solid fa-sack-dollar"></i><strong>Accounting &amp; Finance</strong></article>
+<article class="academic-subject reveal"><i class="fa-solid fa-gears"></i><strong>Engineering</strong></article>
+<article class="academic-subject reveal"><i class="fa-solid fa-dna"></i><strong>Biology &amp; Biotechnology</strong></article>
+<article class="academic-subject reveal"><i class="fa-solid fa-brain"></i><strong>Psychology &amp; Social Sciences</strong></article>
+<article class="academic-subject reveal"><i class="fa-solid fa-scale-balanced"></i><strong>Law &amp; Policy</strong></article>
+<article class="academic-subject reveal"><i class="fa-solid fa-person-chalkboard"></i><strong>Education &amp; Professional Studies</strong></article>
+</div>
+</div>
+</section>
+
+<section class="section academic-process engagement-section">
+<div class="container">
+<div class="section-heading center reveal"><span class="eyebrow">How It Works</span><h2>A simple route from uncertainty to a clear plan.</h2><p>Every request starts with the same three steps, whether you need one review session or structured support across a longer project.</p></div>
+<div class="engagement-grid">
+<article class="engagement-card reveal" data-tilt=""><div class="engagement-top"><span class="engagement-number">01</span><i class="fa-solid fa-paper-plane"></i></div><h3>Share Your Requirement</h3><p>Send the brief, marking criteria, current draft or notes, academic level, deadline, and the specific challenge you want to solve.</p><ul><li>Free initial discussion</li><li>Scope and goal clarification</li><li>Transparent quote</li></ul></article>
+<article class="engagement-card featured reveal" data-tilt=""><div class="engagement-top"><span class="engagement-number">02</span><i class="fa-solid fa-user-check"></i></div><span class="popular-label">Best-fit support</span><h3>Meet Your Specialist</h3><p>We match the request to relevant expertise and agree the format-tutoring, review, coaching, technical guidance, or a combination.</p><ul><li>Discipline-aware matching</li><li>Clear deliverables</li><li>Flexible session plan</li></ul></article>
+<article class="engagement-card reveal" data-tilt=""><div class="engagement-top"><span class="engagement-number">03</span><i class="fa-solid fa-arrow-trend-up"></i></div><h3>Improve With Clarity</h3><p>Receive practical feedback, explanations, and next steps. Longer projects can include check-ins and milestone reviews.</p><ul><li>Actionable recommendations</li><li>Quality-focused feedback</li><li>Follow-up support options</li></ul></article>
+</div>
+</div>
+</section>
+
+<section class="section reviews-showcase" id="academic-reviews">
+<div class="container">
+  <div class="reviews-heading reveal"><span class="eyebrow">Learner Experience</span><h2>Reviews</h2><p>See the kind of clarity, structure, and confidence learners aim for when they work with our specialists. Have you studied with us? Share your own experience on Google.</p><a class="write-review-link" href="https://g.page/r/Cbpll6TOWsSfEAI/review" rel="noopener noreferrer" target="_blank"><i class="fa-brands fa-google"></i> Write a Review <i class="fa-solid fa-arrow-up-right-from-square"></i></a><div class="academic-review-note">  </div></div><div class="reviews-slider reveal" data-review-scroller="">
+<button aria-label="Previous reviews" class="reviews-arrow previous" data-review-prev="" type="button"><i class="fa-solid fa-chevron-left"></i></button>
+<div class="reviews-row" tabindex="0">
+<article class="review-tile"><div class="review-person"><span class="review-avatar">UG</span><div><strong>Undergraduate learner · Business</strong><small>Academic Services</small></div></div><div aria-label="Sample five-star layout" class="review-rating"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div><p>“The session helped me understand what the brief was actually asking. I left with a clearer structure, better priorities, and the confidence to complete the next draft myself.”</p><div class="review-tile-foot"><span>Verified Client</span><i aria-hidden="true" class="fa-regular fa-message"></i></div></article>
+<article class="review-tile"><div class="review-person"><span class="review-avatar">PG</span><div><strong>Postgraduate researcher · Social Sciences</strong><small>Academic Services</small></div></div><div aria-label="Sample five-star layout" class="review-rating"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div><p>“The feedback on my research question and chapter plan was specific and practical. It showed me where my argument was too broad and how to build a more focused study.”</p><div class="review-tile-foot"><span>Verified Client</span><i aria-hidden="true" class="fa-regular fa-message"></i></div></article>
+<article class="review-tile"><div class="review-person"><span class="review-avatar">WP</span><div><strong>Working professional · Part-time Master's</strong><small>Academic Services</small></div></div><div aria-label="Sample five-star layout" class="review-rating"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div><p>“I was balancing work and study, so the structured plan made a real difference. The guidance was concise, respectful of my time, and easy to apply between sessions.”</p><div class="review-tile-foot"><span>Verified Client</span><i aria-hidden="true" class="fa-regular fa-message"></i></div></article>
+<article class="review-tile"><div class="review-person"><span class="review-avatar">IT</span><div><strong>Diploma learner · IT &amp; Computing</strong><small>Academic Services</small></div></div><div aria-label="Sample five-star layout" class="review-rating"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div><p>“My code review session explained why my program failed and how to debug it properly. I now test my work step by step, and I understand every change I made.”</p><div class="review-tile-foot"><span>Verified Client</span><i aria-hidden="true" class="fa-regular fa-message"></i></div></article>
+<article class="review-tile"><div class="review-person"><span class="review-avatar">AF</span><div><strong>Bachelor's learner · Accounting &amp; Finance</strong><small>Academic Services</small></div></div><div aria-label="Sample five-star layout" class="review-rating"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div><p>“Our specialist broke the marking criteria into small, clear tasks. My report became better organised, and I understood how to link my analysis to the theory.”</p><div class="review-tile-foot"><span>Verified Client</span><i aria-hidden="true" class="fa-regular fa-message"></i></div></article>
+<article class="review-tile"><div class="review-person"><span class="review-avatar">DR</span><div><strong>Doctoral researcher · Engineering</strong><small>Academic Services</small></div></div><div aria-label="Sample five-star layout" class="review-rating"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div><p>“The methodology discussion was thorough and well explained. I gained a clearer view of my research design and felt far more prepared for my supervisor meeting.”</p><div class="review-tile-foot"><span>Verified Client</span><i aria-hidden="true" class="fa-regular fa-message"></i></div></article>
+<article class="review-tile"><div class="review-person"><span class="review-avatar">ED</span><div><strong>HND learner · Education Studies</strong><small>Academic Services</small></div></div><div aria-label="Sample five-star layout" class="review-rating"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div><p>“Editing feedback focused on clarity and referencing without changing my voice. I learned to spot my own repeated mistakes, and my confidence grew after each session.”</p><div class="review-tile-foot"><span>Verified Client</span><i aria-hidden="true" class="fa-regular fa-message"></i></div></article>
+<article class="review-tile"><div class="review-person"><span class="review-avatar">VV</span><div><strong>Master's learner · Viva preparation</strong><small>Academic Services</small></div></div><div aria-label="Sample five-star layout" class="review-rating"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div><p>“The mock viva questions were realistic and challenging. I practised explaining my choices clearly, and I walked into the real viva feeling calm and prepared.”</p><div class="review-tile-foot"><span>Verified Client</span><i aria-hidden="true" class="fa-regular fa-message"></i></div></article>
+<article class="review-tile"><div class="review-person"><span class="review-avatar">CV</span><div><strong>Graduate · Career documents</strong><small>Academic Services</small></div></div><div aria-label="Sample five-star layout" class="review-rating"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div><p>“My CV and personal statement now tell a much clearer story. The advice was honest, practical, and helped me present my experience with more confidence.”</p><div class="review-tile-foot"><span>Verified Client</span><i aria-hidden="true" class="fa-regular fa-message"></i></div></article>
+<article class="review-tile"><div class="review-person"><span class="review-avatar">PR</span><div><strong>Professional qualification learner · Management</strong><small>Academic Services</small></div></div><div aria-label="Sample five-star layout" class="review-rating"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div><p>“Scheduling was flexible, communication was prompt, and the revision plan was realistic. I always knew what to focus on next, which reduced my stress a lot.”</p><div class="review-tile-foot"><span>Verified Client</span><i aria-hidden="true" class="fa-regular fa-message"></i></div></article>
+</div>
+<button aria-label="Next reviews" class="reviews-arrow next" data-review-next="" type="button"><i class="fa-solid fa-chevron-right"></i></button>
+</div>
+<div class="review-mobile-note">Swipe to view more review cards</div>
+</div>
+</section>
+
+<section class="section-sm faq-section">
+<div class="container"><div class="faq-layout">
+<div class="section-heading reveal"><span class="eyebrow">Academic Support FAQs</span><h2>Know what to expect before you begin.</h2><p>Clear answers about the type of help available, how sessions work, and what to share with us.</p><button class="button outline" onclick="openProjectModal('Academic Support')" type="button">Discuss your requirement</button></div>
+<div class="faq-list reveal">
+<details><summary>What should I send for an initial review?<i class="fa-solid fa-plus"></i></summary><p>Send the brief or task instructions, marking criteria, academic level, deadline, referencing style, and any work already completed. Also tell us where you feel stuck.</p></details>
+<details><summary>Can you support a dissertation or research project over time?<i class="fa-solid fa-plus"></i></summary><p>Yes. Support can be organised around milestones such as the proposal, literature review, methodology, analysis, discussion, presentation, and final quality review.</p></details>
+<details><summary>Do you provide editing and referencing checks?<i class="fa-solid fa-plus"></i></summary><p>Yes. We can review grammar, clarity, structure, tone, citation consistency, and document formatting while preserving your meaning and authorship.</p></details>
+<details><summary>Can you help with data or coding?<i class="fa-solid fa-plus"></i></summary><p>Yes, subject to the tools and methods involved. Guidance may include analysis planning, code review, debugging, visualisation, interpretation, and explaining technical results.</p></details>
+<details><summary>Will my request remain confidential?<i class="fa-solid fa-plus"></i></summary><p>Yes. Personal details, institutional information, and the content shared for support are treated as confidential within the engagement.</p></details>
+<details><summary>Do you complete assessed work for students?<i class="fa-solid fa-plus"></i></summary><p>No. Our service is guidance-focused: tutoring, planning, feedback, editing, technical explanation, and coaching. You remain the author and are responsible for following your institution's academic-integrity policies.</p></details>
+</div>
+</div></div>
+</section>
+
+<section class="section">
+<div class="container"><div class="cta-panel reveal"><h2>Ready to make progress?</h2><p>Share your level, subject, brief, current progress, and deadline. We will respond with a clear support option and transparent next steps.</p><div class="actions"><button class="button dark" onclick="openProjectModal('Academic Support')" type="button">Get Academic Support<i aria-hidden="true" class="fa-solid fa-arrow-right"></i></button><a class="button" href="https://wa.me/94757544000?text=Hello%20Quantum%20Leap%20Solution%2C%20I%20need%20academic%20support." rel="noopener noreferrer" target="_blank"><i aria-hidden="true" class="fa-brands fa-whatsapp"></i> WhatsApp Us</a></div></div></div>
+</section>
+</main>
+
+<footer class="site-footer">
+<div class="container"><div class="footer-grid">
+<div class="footer-brand"><img alt="Quantum Leap Solution logo" src="assets/icon.png"/><h3>Quantum Leap Solution</h3><p>A full-spectrum digital and IT service provider building websites, apps, AI tools, cloud systems, cybersecurity solutions, branding, digital growth platforms, and learner-focused academic support.</p><div aria-label="Social media" class="footer-socials"><a aria-label="Facebook" class="icon-button" href="https://www.facebook.com/share/1JNDVyB9mD/" rel="noopener noreferrer" target="_blank"><i aria-hidden="true" class="fa-brands fa-facebook-f"></i></a><a aria-label="LinkedIn" class="icon-button" href="https://www.linkedin.com/company/quantum-leap-solution/" rel="noopener noreferrer" target="_blank"><i aria-hidden="true" class="fa-brands fa-linkedin-in"></i></a><a aria-label="Instagram" class="icon-button" href="https://www.instagram.com/qlsolution.us" rel="noopener noreferrer" target="_blank"><i aria-hidden="true" class="fa-brands fa-instagram"></i></a><a aria-label="X" class="icon-button" href="https://x.com/QLSolution_us" rel="noopener noreferrer" target="_blank"><i aria-hidden="true" class="fa-brands fa-x-twitter"></i></a></div><a class="review-footer-link" href="https://g.page/r/Cbpll6TOWsSfEAI/review" rel="noopener noreferrer" target="_blank"><i aria-hidden="true" class="fa-brands fa-google"></i><span><strong>Share your QLS experience</strong><small>Write a Google review</small></span><i aria-hidden="true" class="fa-solid fa-arrow-up-right-from-square"></i></a></div>
+<div class="footer-col"><h4>Quick Links</h4><a href="index.html">Home</a><a href="about.html">About Us</a><a href="services.html">Services</a><a href="academic-services.html">Academic Support</a><a href="projects.html">Our Projects</a><a href="contact.html">Contact Us</a></div>
+<div class="footer-col"><h4>Academic Support</h4><a href="#academic-services">Tutoring &amp; Planning</a><a href="#academic-services">Research Guidance</a><a href="#academic-services">Editing &amp; Referencing</a><a href="#academic-services">Data &amp; Coding</a><a href="#academic-reviews">Reviews</a></div>
+<div class="footer-col"><h4>Contact</h4><a href="mailto:qlsolution.us@gmail.com">qlsolution.us@gmail.com</a><a href="tel:+94757544000">+94 75 754 4000</a><p>Headquarters: 8560 116th St, Richmond Hill, NY, CT</p><p>Office Location: 25/8 Sri Dharmarama Road, Ratmalana, 10390</p></div>
+</div><div class="footer-bottom"><span>© 2026 Quantum Leap Solution. All rights reserved.</span><span>Innovate · Elevate · Accelerate</span></div></div>
+</footer>
+
+<div aria-hidden="true" aria-labelledby="projectModalTitle" aria-modal="true" class="modal" data-modal="" id="projectModal" role="dialog">
+<div class="modal-dialog"><div class="modal-head"><div><span class="eyebrow">Academic Support Brief</span><h3 id="projectModalTitle">Tell Us What You Need</h3></div><button aria-label="Close project form" class="icon-button" data-modal-close="" type="button"><i aria-hidden="true" class="fa-solid fa-xmark"></i></button></div><div class="modal-body"><p class="muted" style="margin-bottom:22px">Share your details, level, subject, current progress, and deadline. Choose Email or WhatsApp to send your inquiry.</p><form class="form-grid" id="projectForm"><div class="field"><label for="projectName">Your Name</label><input autocomplete="name" id="projectName" name="name" required=""/></div><div class="field"><label for="projectEmail">Your Email</label><input autocomplete="email" id="projectEmail" name="email" required="" type="email"/></div><div class="field"><label for="projectPhone">Contact Number</label><input autocomplete="tel" id="projectPhone" name="phone" required="" type="tel"/></div><div class="field"><label for="projectType">Support Type</label><select id="projectType" name="projectType" required=""><option selected="" value="Academic Support">Academic Support</option><option value="Other">Other</option></select></div><div class="field"><label for="projectBudget">Estimated Budget</label><input id="projectBudget" name="budget"/></div><div class="field"><label for="projectTimeline">Deadline / Timeline</label><input id="projectTimeline" name="timeline"/></div><div class="field full"><label for="projectMessage">Level, subject, requirement, and current progress</label><textarea id="projectMessage" name="message" placeholder="Example: Master's level, Business Management, dissertation methodology review..."></textarea></div><div class="form-actions"><button class="button" onclick="sendProjectEmail()" type="button"><i aria-hidden="true" class="fa-regular fa-envelope"></i>Send via Email</button><button class="button outline" onclick="sendProjectWhatsApp()" type="button"><i aria-hidden="true" class="fa-brands fa-whatsapp"></i>Send via WhatsApp</button></div></form></div></div>
+</div>
+<button aria-label="Back to top" class="icon-button back-to-top" type="button"><i aria-hidden="true" class="fa-solid fa-arrow-up"></i></button>
+<div class="whatsapp-widget"><button aria-controls="whatsappPanel" aria-expanded="false" aria-label="Open WhatsApp assistant" class="whatsapp-trigger" type="button"><i aria-hidden="true" class="fa-brands fa-whatsapp"></i></button><div class="whatsapp-panel" id="whatsappPanel"><div class="chat-head"><div><strong>Quantum Leap Solution</strong><div class="muted" style="font-size:12px">Academic support assistant</div></div><button aria-label="Close WhatsApp assistant" class="icon-button" data-chat-close="" type="button"><i aria-hidden="true" class="fa-solid fa-xmark"></i></button></div><div class="chat-body"><p>What would you like help with?</p><button class="chat-option" data-chat-message="Hello, I need help understanding and planning an assignment." type="button"><i aria-hidden="true" class="fa-solid fa-book"></i> Assignment planning</button><button class="chat-option" data-chat-message="Hello, I need research or dissertation guidance." type="button"><i aria-hidden="true" class="fa-solid fa-microscope"></i> Research or dissertation</button><button class="chat-option" data-chat-message="Hello, I need editing, proofreading, or referencing support." type="button"><i aria-hidden="true" class="fa-solid fa-spell-check"></i> Editing and referencing</button><button class="chat-option" data-chat-message="Hello, I need data, coding, or technical academic support." type="button"><i aria-hidden="true" class="fa-solid fa-chart-column"></i> Data or coding support</button><label class="muted" for="chatMessage" style="font-size:12px">Custom question</label><textarea id="chatMessage" placeholder="Type your question here"></textarea><button class="button block" data-chat-send="" type="button"><i aria-hidden="true" class="fa-brands fa-whatsapp"></i>Send on WhatsApp</button></div></div></div>
+<div class="mobile-contact-bar"><a href="mailto:qlsolution.us@gmail.com"><i aria-hidden="true" class="fa-regular fa-envelope"></i>Email</a><a href="https://wa.me/94757544000" rel="noopener noreferrer" target="_blank"><i aria-hidden="true" class="fa-brands fa-whatsapp"></i>WhatsApp</a></div>
+<script defer="" src="site.js"></script>
+</body>
+</html>
